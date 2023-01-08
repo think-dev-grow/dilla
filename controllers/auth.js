@@ -563,6 +563,8 @@ const logOut = asyncHandler(async (req, res) => {
   res.status(200).json({ msg: "Logout succesfully", success: true });
 });
 
+//test
+
 module.exports = {
   sendOTP,
   verifyOTP,
