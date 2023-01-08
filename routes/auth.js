@@ -7,6 +7,15 @@ const {
   securityQusetion,
   addBVN,
   answerSQ,
+  wrongContact,
+  logOut,
+  Login,
+  setPin,
+  mobileVerification,
+  updateMobileVerification,
+  loginStatus,
+  forgotPassword,
+  resetPassword,
 } = require("../controllers/auth");
 const router = express.Router();
 
@@ -25,5 +34,21 @@ router.put("/security-question", protect, securityQusetion);
 router.post("/answer-question", protect, answerSQ);
 
 router.put("/add-bvn", protect, addBVN);
+
+router.put("/set-pin", protect, setPin);
+
+router.put("/mobile-otp", protect, mobileVerification);
+
+router.get("/mobile-otp-2", protect, updateMobileVerification);
+
+router.put("/wrong-contact", protect, wrongContact);
+
+router.post("/login", Login);
+
+router.get("/logout", logOut);
+
+router.get("/login-status", loginStatus);
+
+router.post("/forgot-password", forgotPassword);
 
 module.exports = router;

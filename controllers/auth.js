@@ -4,6 +4,8 @@ const randomize = require("randomatic");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
+const Token = require("../models/Token");
+const crypto = require("crypto");
 
 const sendVerificationMail = require("../utils/email/sendOTP");
 const sendCompleteProfile = require("../utils/email/sendCompleteProfile");
@@ -11,14 +13,14 @@ const ceoMail = require("../utils/email/ceoMail");
 const supportMail = require("../utils/email/supportMail");
 
 //Generate Token
-const generateToken = (id, email) => {
+const generateToken = (id) => {
   const payload = {
     id,
-    email,
   };
   return jwt.sign(payload, process.env.JWT, { expiresIn: "1d" });
 };
 
+//Send OTP
 const sendOTP = asyncHandler(async (req, res) => {
   const { email } = req.body;
   let otp;
@@ -233,42 +235,37 @@ const completeProfile = asyncHandler(async (req, res) => {
 
 //Security Question API
 const securityQusetion = asyncHandler(async (req, res) => {
-  const check = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id);
+  const { question, answer } = req.body;
 
-  if (!check) {
+  if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
   }
 
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(req.body.securityQusetion.answer, salt);
+  const hash = bcrypt.hashSync(answer, salt);
 
   const sq = {
-    question: req.body.securityQusetion.question,
+    question: question,
     answer: hash,
   };
 
   const sqUpdate = await User.findOneAndUpdate(
-    { _id: req.params.id },
-    { securityQusetion: sq },
-    { new: true }
-  );
-
-  const data = await User.findOneAndUpdate(
-    { _id: req.params.id },
-    { verified: "sq" },
+    { _id: req.user.id },
+    { $set: { securityQusetion: sq, verified: "sq" } },
     { new: true }
   );
 
   res.status(200).json({
     success: true,
     msg: `Dont worry ${sqUpdate.kodeHex} , Your secret is safe with us`,
-    data,
+    sqUpdate,
   });
 });
 
 //Answer security question
-const answerSQ = asyncHandler(async (req, res, next) => {
+const answerSQ = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
   const { answer } = req.body;
 
@@ -301,7 +298,7 @@ const addBVN = asyncHandler(async (req, res) => {
 
   if (bvn.length < 11 || bvn.length > 11) {
     res.status(400);
-    throw new Error("incorrect BVN");
+    throw new Error("invalid BVN");
   }
 
   const point = user.kycPoints + 25;
@@ -321,7 +318,7 @@ const addBVN = asyncHandler(async (req, res) => {
 });
 
 //Mobile verification
-const mobileVerification = asyncHandler(async (req, res, next) => {
+const mobileVerification = asyncHandler(async (req, res) => {
   try {
     const { id } = req.user;
     const { pin } = req.body;
@@ -363,7 +360,7 @@ const updateMobileVerification = asyncHandler(async (req, res) => {
 
   await User.findOneAndUpdate(
     { _id: check._id },
-    { verified: "mv" },
+    { $set: { verified: "mv" } },
     { new: true }
   );
 
@@ -373,7 +370,37 @@ const updateMobileVerification = asyncHandler(async (req, res) => {
   });
 });
 
-const setPin = asyncHandler(async (req, res, next) => {
+//Wrong Contact
+const wrongContact = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  const { newPhoneNumber } = req.body;
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const checkNumber = await User.findOne({ contact: newPhoneNumber });
+
+  if (checkNumber) {
+    res.status(401);
+    throw new Error("phone number already exist");
+  }
+
+  await User.findOneAndUpdate(
+    { _id: req.user.id },
+    { $set: { contact: newPhoneNumber } },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json({ success: true, msg: "Phone number has been changed successfully" });
+});
+
+//Set pin
+const setPin = asyncHandler(async (req, res) => {
   const { id } = req.user;
   const { code, confirmCode } = req.body;
 
@@ -384,14 +411,27 @@ const setPin = asyncHandler(async (req, res, next) => {
     throw new Error("User does not exist.");
   }
 
+  if (!code || code.length < 4 || code.length > 4) {
+    res.status(400);
+    throw new Error("Please enter a valid pin.");
+  }
+
+  if (!confirmCode || confirmCode.length < 4 || confirmCode.length > 4) {
+    res.status(400);
+    throw new Error("Please enter a valid pin.");
+  }
+
   if (code !== confirmCode) {
     res.status(400);
     throw new Error(`Hey ${user.kodeHex}, password dont match`);
   }
 
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(code, salt);
+
   await User.findByIdAndUpdate(
     { _id: id },
-    { $set: { transactionPin: code, verified: "completed" } }
+    { $set: { transactionPin: hash, verified: "completed" } }
   );
 
   res.status(200).json({
@@ -402,10 +442,113 @@ const setPin = asyncHandler(async (req, res, next) => {
 });
 
 //Forgot Password
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  //Create reset token
+  let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
+
+  //Hash Token
+  const hashToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  //Save token to DB
+  await new Token({
+    userId: user._id,
+    token: hashToken,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 5 * (60 * 1000), // 5 min,
+  }).save();
+
+  //Create url link
+  const link = process.env.Fro;
+
+  res.send("Forgot password");
+});
 
 //Reset Password
+const resetPassword = asyncHandler(async (req, res) => {
+  res.send("reset password");
+});
 
 //Log In
+const Login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  //validate request
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please add email and password");
+  }
+
+  //check if user exist
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist , Please sign up");
+  }
+
+  const validPassword = await bcrypt.compare(password, user.password);
+
+  if (!validPassword) {
+    res.status(400);
+    throw new Error("Invalid login credentials ");
+  }
+
+  //generate token
+  const token = generateToken(user._id);
+
+  //Send HTTP only cookie
+  res.cookie("token", token, {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 86400),
+    sameSite: "none",
+    secure: true,
+  });
+
+  if (user && validPassword) {
+    const { _id, email, kodeHex } = user;
+
+    res.status(200).json({
+      success: true,
+      msg: "Login successfull",
+      user: {
+        _id,
+        email,
+        kodeHex,
+      },
+    });
+  }
+});
+
+//login status
+const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.json(false);
+  }
+
+  //verify token
+  const verified = jwt.verify(token, process.env.JWT);
+
+  if (verified) {
+    return res.json(true);
+  }
+
+  return res.json(false);
+});
 
 //Log Out
 const logOut = asyncHandler(async (req, res) => {
@@ -417,7 +560,7 @@ const logOut = asyncHandler(async (req, res) => {
     secure: true,
   });
 
-  res.status(200).json({ msg: "LogOut succesfully", success: true });
+  res.status(200).json({ msg: "Logout succesfully", success: true });
 });
 
 module.exports = {
@@ -430,4 +573,11 @@ module.exports = {
   mobileVerification,
   updateMobileVerification,
   setPin,
+  answerSQ,
+  wrongContact,
+  forgotPassword,
+  resetPassword,
+  logOut,
+  Login,
+  loginStatus,
 };
