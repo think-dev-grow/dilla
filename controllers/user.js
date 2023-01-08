@@ -143,6 +143,11 @@ const nextOfKin = asyncHandler(async (req, res) => {
 
   const nextOfKinDetails = req.body.nextOfKin;
 
+  if (!nextOfKinDetails) {
+    res.status(400);
+    throw new Error("Please fill out form correctly.");
+  }
+
   const data = await User.findOneAndUpdate(
     { _id: req.params.id },
     { $set: { nextOfKin: nextOfKinDetails } },
