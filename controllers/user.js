@@ -4,10 +4,16 @@ const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
 const { fileSizeFormatter } = require("../utils/uploadFile");
 
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.CLOUD_KEY,
+//   api_secret: process.env.CLOUD_SECRET,
+// });
+
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_KEY,
-  api_secret: process.env.CLOUD_SECRET,
+  cloud_name: "domthgc9v",
+  api_key: "382674119878141",
+  api_secret: "FAupYcLySkHxYuVyF5J36UTy2y0",
 });
 
 //Get User
