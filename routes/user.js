@@ -19,7 +19,7 @@ const { upload } = require("../utils/uploadFile");
 
 router.get("/get-user", protect, getUser);
 
-router.post("/profile-pic", upload.single("image"), profileImage);
+router.post("/profile-pic", profileImage);
 
 router.put("/next-of-kin", protect, nextOfKin);
 
