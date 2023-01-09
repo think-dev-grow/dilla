@@ -106,16 +106,16 @@ const changePassword = asyncHandler(async (req, res) => {
 const profileImage = asyncHandler(async (req, res) => {
   let fileData = {};
 
-  // res.send("live");
+  res.send("live");
 
-  // const id = req.user.id;
+  const id = req.user.id;
 
-  // const user = await User.findById(id);
+  const user = await User.findById(id);
 
-  // if (!user) {
-  //   res.status(400);
-  //   throw new Error("User does not exist.");
-  // }
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
 
   if (!req.file) {
     res.status(400);
@@ -134,13 +134,13 @@ const profileImage = asyncHandler(async (req, res) => {
     fileSize: fileSizeFormatter(req.file.size, 2),
   };
 
-  // await User.findOneAndUpdate(
-  //   { _id: id },
-  //   {
-  //     $set: { photo: uploadedFile.secure_url },
-  //   },
-  //   { new: true }
-  // );
+  await User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: { photo: uploadedFile.secure_url },
+    },
+    { new: true }
+  );
 
   res
     .status(200)
