@@ -142,7 +142,7 @@ const profileImage = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    msg: "picture uploaded successfully................",
+    msg: "picture uploaded successfull",
     fileData,
   });
 });
