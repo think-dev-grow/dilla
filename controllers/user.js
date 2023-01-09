@@ -106,14 +106,14 @@ const changePassword = asyncHandler(async (req, res) => {
 const profileImage = asyncHandler(async (req, res) => {
   let fileData = {};
 
-  const id = req.user.id;
+  // const id = req.user.id;
 
-  const user = await User.findById(id);
+  // const user = await User.findById(id);
 
-  if (!user) {
-    res.status(400);
-    throw new Error("User does not exist.");
-  }
+  // if (!user) {
+  //   res.status(400);
+  //   throw new Error("User does not exist.");
+  // }
 
   if (!req.file) {
     res.status(400);
@@ -125,28 +125,26 @@ const profileImage = asyncHandler(async (req, res) => {
     resource_type: "image",
   });
 
-  if (req.file) {
-    fileData = {
-      fileName: req.file.originalname,
-      filePath: uploadedFile.secure_url,
-      fileType: req.file.mimetype,
-      fileSize: fileSizeFormatter(req.file.size, 2),
-    };
+  fileData = {
+    fileName: req.file.originalname,
+    filePath: uploadedFile.secure_url,
+    fileType: req.file.mimetype,
+    fileSize: fileSizeFormatter(req.file.size, 2),
+  };
 
-    await User.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: { photo: uploadedFile.secure_url },
-      },
-      { new: true }
-    );
+  // await User.findOneAndUpdate(
+  //   { _id: id },
+  //   {
+  //     $set: { photo: uploadedFile.secure_url },
+  //   },
+  //   { new: true }
+  // );
 
-    res.status(200).json({
-      success: true,
-      msg: "picture uploaded successfull",
-      fileData,
-    });
-  }
+  res.status(200).json({
+    success: true,
+    msg: "picture uploaded successfull",
+    fileData,
+  });
 });
 
 //Set Next of kin
