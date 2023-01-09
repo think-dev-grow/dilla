@@ -106,8 +106,6 @@ const changePassword = asyncHandler(async (req, res) => {
 const profileImage = asyncHandler(async (req, res) => {
   let fileData = {};
 
-  res.send("live");
-
   const id = req.user.id;
 
   const user = await User.findById(id);
@@ -142,9 +140,11 @@ const profileImage = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  res
-    .status(200)
-    .json({ success: true, msg: "picture uploaded successfully...", fileData });
+  res.status(200).json({
+    success: true,
+    msg: "picture uploaded successfully................",
+    fileData,
+  });
 });
 
 //Set Next of kin
