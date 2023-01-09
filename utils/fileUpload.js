@@ -5,7 +5,6 @@ const storage = multer.diskStorage({
     cb(null, "uploads");
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
       new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname
@@ -33,13 +32,10 @@ const fileSizeFormatter = (bytes, decimal) => {
   }
 
   const dm = decimal || 2;
-
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "YB", "ZB"];
-
   const index = Math.floor(Math.log(bytes) / Math.log(1000));
-
   return (
-    parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + "" + sizes[index]
+    parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + " " + sizes[index]
   );
 };
 

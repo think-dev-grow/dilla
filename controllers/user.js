@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const { fileSizeFormatter } = require("../utils/fileUpload");
 const cloudinary = require("cloudinary").v2;
-const { fileSizeFormatter } = require("../utils/uploadFile");
 
 // cloudinary.config({
 //   cloud_name: process.env.CLOUD_NAME,
@@ -106,7 +106,7 @@ const changePassword = asyncHandler(async (req, res) => {
 const profileImage = asyncHandler(async (req, res) => {
   let fileData = {};
 
-  res.send("live");
+  // res.send("live");
 
   // const id = req.user.id;
 
@@ -117,22 +117,22 @@ const profileImage = asyncHandler(async (req, res) => {
   //   throw new Error("User does not exist.");
   // }
 
-  // if (!req.file) {
-  //   res.status(400);
-  //   throw new Error("No image was selected");
-  // }
+  if (!req.file) {
+    res.status(400);
+    throw new Error("image can not be uploaded");
+  }
 
-  // let uploadedFile = await cloudinary.uploader.upload(req.file.path, {
-  //   folder: "Profile Pic",
-  //   resource_type: "image",
-  // });
+  let uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+    folder: "Profile Pic",
+    resource_type: "image",
+  });
 
-  // fileData = {
-  //   fileName: req.file.originalname,
-  //   filePath: uploadedFile.secure_url,
-  //   fileType: req.file.mimetype,
-  //   fileSize: fileSizeFormatter(req.file.size, 2),
-  // };
+  fileData = {
+    fileName: req.file.originalname,
+    filePath: uploadedFile.secure_url,
+    fileType: req.file.mimetype,
+    fileSize: fileSizeFormatter(req.file.size, 2),
+  };
 
   // await User.findOneAndUpdate(
   //   { _id: id },
@@ -142,7 +142,9 @@ const profileImage = asyncHandler(async (req, res) => {
   //   { new: true }
   // );
 
-  // res.status(200).json({ success: true, msg: "picture uploaded successfully" });
+  res
+    .status(200)
+    .json({ success: true, msg: "picture uploaded successfully...", fileData });
 });
 
 //Set Next of kin
