@@ -12,11 +12,11 @@ const errorHandler = require("./middlewares/errorMiddleware");
 const app = express();
 
 //Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
