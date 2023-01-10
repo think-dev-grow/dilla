@@ -56,7 +56,8 @@ const sendOTP = asyncHandler(async (req, res) => {
     // sendVerificationMail(user.email, otp);
 
     if (user) {
-      res.status(201).json({ success: true, otp });
+      const verified = user.verified;
+      res.status(201).json({ success: true, otp, verified, msg: "13" });
     } else {
       res.status(400);
       throw new Error("Invalid user data");
@@ -90,7 +91,8 @@ const sendOTP = asyncHandler(async (req, res) => {
     // sendVerificationMail(user.email, otp);
 
     if (user) {
-      res.status(201).json({ success: true, otp });
+      const verified = user.verified;
+      res.status(201).json({ success: true, otp, verified });
     } else {
       res.status(400);
       throw new Error("Invalid user data");
