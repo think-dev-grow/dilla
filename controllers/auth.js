@@ -92,7 +92,9 @@ const sendOTP = asyncHandler(async (req, res) => {
 
     if (user) {
       const verified = user.verified;
-      res.status(201).json({ success: true, otp, verified });
+      res
+        .status(201)
+        .json({ success: true, otp, verified, msg: "Token resent" });
     } else {
       res.status(400);
       throw new Error("Invalid user data");
