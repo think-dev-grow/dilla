@@ -33,7 +33,6 @@ const getUser = asyncHandler(async (req, res) => {
     user: {
       _id,
       email,
-      kodeHex,
       verified,
     },
   });
