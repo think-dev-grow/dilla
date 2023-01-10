@@ -25,7 +25,7 @@ const getUser = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  const { _id, email, kodeHex } = user;
+  const { _id, email, kodeHex, verified } = user;
 
   res.status(200).json({
     success: true,
@@ -34,6 +34,7 @@ const getUser = asyncHandler(async (req, res) => {
       _id,
       email,
       kodeHex,
+      verified,
     },
   });
 });
