@@ -53,7 +53,7 @@ const sendOTP = asyncHandler(async (req, res) => {
     });
 
     //Send Mail
-    // sendVerificationMail(user.email, otp);
+    sendVerificationMail(user.email, otp);
 
     if (user) {
       const verified = user.verified;
@@ -88,7 +88,7 @@ const sendOTP = asyncHandler(async (req, res) => {
     });
 
     //Send Mail
-    // sendVerificationMail(user.email, otp);
+    sendVerificationMail(user.email, otp);
 
     if (user) {
       const verified = user.verified;
@@ -227,9 +227,9 @@ const completeProfile = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  //   sendCompleteProfile(data.email, data.kodeHex);
-  //   ceoMail(data.email, data.kodeHex);
-  //   supportMail(data.email, data.kodeHex);
+  sendCompleteProfile(data.email, data.kodeHex);
+  ceoMail(data.email, data.kodeHex);
+  supportMail(data.email, data.kodeHex);
 
   res.status(200).json({
     success: true,
