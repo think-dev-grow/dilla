@@ -196,7 +196,7 @@ const completeProfile = asyncHandler(async (req, res) => {
 
   //check if email exist
   const checkEmail = await User.findOne({ email: req.body.email });
-  if (checkEmail) {
+  if (checkEmail && checkEmail.dhid) {
     res.status(400);
     throw new Error("Email already in use.");
   }
