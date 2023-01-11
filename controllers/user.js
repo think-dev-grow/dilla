@@ -117,10 +117,10 @@ const profileImage = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  if (!req.file) {
-    res.status(400);
-    throw new Error("image can not be uploaded");
-  }
+  // if (!req.file) {
+  //   res.status(400);
+  //   throw new Error("image can not be uploaded");
+  // }
 
   let uploadedFile = await cloudinary.uploader.upload(req.file.path, {
     folder: "Profile Pic",
