@@ -11,9 +11,9 @@ const cloudinary = require("cloudinary").v2;
 // });
 
 cloudinary.config({
-  cloud_name: "domthgc9v",
-  api_key: "382674119878141",
-  api_secret: "FAupYcLySkHxYuVyF5J36UTy2y0",
+  cloud_name: "dyanzjijz",
+  api_key: "252218227834719",
+  api_secret: "gp4pR3KMUQhNBbLjlL7iaINpmsA",
 });
 
 //Get User
