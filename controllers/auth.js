@@ -441,7 +441,6 @@ const setPin = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: `Successfull , remeber ${user.kodeHex} don't share you pin with anyone`,
-    data,
   });
 });
 
