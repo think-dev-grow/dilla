@@ -110,7 +110,7 @@ const sendOTP = asyncHandler(async (req, res) => {
 
 //Verify OTP API
 const verifyOTP = asyncHandler(async (req, res) => {
-  const { otp } = req.body;
+  const { code } = req.body;
 
   //Fetch user from database
   const user = await User.findById(req.user.id);
@@ -126,7 +126,7 @@ const verifyOTP = asyncHandler(async (req, res) => {
     throw new Error("Not Allowed");
   }
 
-  if (otp === user.emailOTP) {
+  if (code === user.emailOTP) {
     console.log(userID);
     await User.findOneAndUpdate(
       { _id: req.user.id },
