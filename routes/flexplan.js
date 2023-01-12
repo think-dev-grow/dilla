@@ -12,6 +12,7 @@ const {
   setSavingPeriod,
   calcIntrest,
   activatePlanAPI,
+  topUp,
 } = require("../controllers/flexPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -35,5 +36,7 @@ router.put("/saving-period", protect, setSavingPeriod);
 router.get("/calculate-intrest", protect, calcIntrest);
 
 router.put("/activate-plan", protect, activatePlanAPI);
+
+router.put("/flex-top-up", protect, topUp);
 
 module.exports = router;

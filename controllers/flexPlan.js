@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const FlexPlan = require("../models/FlexPlan");
+const Transaction = require("../models/Transaction");
 var abbreviate = require("number-abbreviate");
 const asyncHandler = require("express-async-handler");
 
@@ -510,6 +511,66 @@ const calcIntrest = async (req, res) => {
   });
 };
 
+const topUp = asyncHandler(async (req, res, next) => {
+  const { amount } = req.body;
+  const id = req.user.id;
+
+  const day = new Date().getDay();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
+
+  const hour = new Date().getHours();
+  const minute = new Date().getMinutes();
+
+  const check = minute <= 9 ? `0${minute}` : minute;
+
+  const user = await User.findById(req.user.id);
+
+  const flexPlan = await FlexPlan.findOne({
+    userID: id,
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!flexPlan) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!amount) {
+    res.status(400);
+    throw new Error("Please input the amount you want to save.");
+  }
+
+  const date = `${day}-${month}-${year}  ${hour}:${check}`;
+
+  const transaction = new Transaction({
+    transactionAmount: amount,
+    transactionType: "credit",
+    transactionDate: date,
+    transactionDestination: "flex",
+  });
+
+  const data = await transaction.save();
+
+  const topUp = await FlexPlan.findOneAndUpdate(
+    { userID: id },
+    {
+      $set: {
+        accountBalance: flexPlan.accountBalance + amount,
+      },
+    },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json({ msg: "Top up successful", topUp, data, success: true });
+});
+
 module.exports = {
   createFP,
   autoFlexPlanEarn,
@@ -521,4 +582,5 @@ module.exports = {
   setSavingPeriod,
   calcIntrest,
   activatePlanAPI,
+  topUp,
 };
