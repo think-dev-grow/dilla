@@ -9,7 +9,7 @@ const TargetSchema = new mongoose.Schema(
     earn: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },
     accountBalance: { type: Number, default: 0 },
-    accountNumber: { type: String, default: randomize(0, 10) },
+    accountNumber: { type: Number, default: randomize(0, 10) },
     autoSavingTarget: { type: Number, default: 0 },
     autoSavingRate: { type: Number, default: 0 },
     autoDuration: { type: String },
