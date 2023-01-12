@@ -519,7 +519,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
 
-  const hour = new Date().getHours();
+  const hour = new Date().getHours() + 1;
   const minute = new Date().getMinutes();
 
   const check = minute <= 9 ? `0${minute}` : minute;
