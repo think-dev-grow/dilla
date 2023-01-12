@@ -13,6 +13,7 @@ const {
   calcIntrest,
   activatePlanAPI,
   topUp,
+  getFlexTransactionHistory,
 } = require("../controllers/flexPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -38,5 +39,7 @@ router.get("/calculate-intrest", protect, calcIntrest);
 router.put("/activate-plan", protect, activatePlanAPI);
 
 router.put("/flex-top-up", protect, topUp);
+
+router.get("/flex-history", protect, getFlexTransactionHistory);
 
 module.exports = router;
