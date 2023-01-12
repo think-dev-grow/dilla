@@ -24,7 +24,7 @@ router.post("/profile-pic", protect, upload.single("image"), profileImage);
 
 router.put("/next-of-kin", protect, nextOfKin);
 
-router.put("/generate-account", protect, generateAccount);
+router.get("/generate-account", protect, generateAccount);
 
 router.put("/change-password", protect, changePassword);
 
