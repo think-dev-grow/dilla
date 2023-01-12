@@ -511,7 +511,7 @@ const calcIntrest = async (req, res) => {
   });
 };
 
-const topUp = asyncHandler(async (req, res, next) => {
+const topUp = asyncHandler(async (req, res) => {
   const { amount } = req.body;
   const id = req.user.id;
 
