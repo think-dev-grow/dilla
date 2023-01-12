@@ -568,7 +568,7 @@ const topUp = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ msg: "Top up successful", topUp, data, success: true });
+    .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
 module.exports = {
