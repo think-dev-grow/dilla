@@ -572,6 +572,25 @@ const topUp = asyncHandler(async (req, res) => {
     .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
+const getFlexTransactionHistory = async (req, res, next) => {
+  try {
+    const id = req.user.id;
+
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      res.status(400);
+      throw new Error("User does not exist.");
+    }
+
+    const transactionHistory = await Transaction.find({ userId: id });
+
+    res.status(200).json({ msg: "done", transactionHistory });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createFP,
   autoFlexPlanEarn,
