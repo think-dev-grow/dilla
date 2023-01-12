@@ -30,8 +30,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //Routes Middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/flex", flexPlanRoutes);
-app.use("/api/target", targetPlanRoutes);
+// app.use("/api/flex", flexPlanRoutes);
+// app.use("/api/target", targetPlanRoutes);
 
 //Routes
 app.get("/", (req, res) => {
