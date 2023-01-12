@@ -516,7 +516,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const id = req.user.id;
 
   const day = new Date().getDate();
-  const month = new Date().getMonth();
+  const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
 
   const hour = new Date().getHours();
