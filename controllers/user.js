@@ -327,6 +327,63 @@ const changePin = asyncHandler(async (req, res) => {
   });
 });
 
+const approveIdBack = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = await User.findById(id);
+
+  if (!user) return next(handleError(400, "user does not exist"));
+
+  await User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        idBackStatus: "approve",
+      },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ fileData, msg: "id back approved " });
+});
+
+const generateAccount = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not Found");
+  }
+
+  if (
+    user.idBackStatus === "approve" &&
+    user.idFrontStatus === "approve" &&
+    user.utilityBillStatus === "approve"
+  ) {
+    const accountNumber = randomize("0", 10);
+
+    await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          uid: accountNumber,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      accountNumber,
+      msg: `hey ${user.kodeHex} your account number is ${accountNumber}`,
+    });
+  } else {
+    res.status(200);
+    throw new Error("All Kyc documents must be approved first.");
+  }
+});
+
 module.exports = {
   getUser,
   updateUser,
@@ -337,4 +394,5 @@ module.exports = {
   uploadIdFront,
   uploadIdBack,
   uploadUtilityBill,
+  generateAccount,
 };
