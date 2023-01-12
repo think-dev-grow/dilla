@@ -550,7 +550,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const transaction = new Transaction({
     transactionAmount: amount,
     transactionType: "credit",
-    transactionDate: date,
+    transactionDate: `${new Date()}`,
     transactionDestination: "flex",
   });
 
