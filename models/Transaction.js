@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema(
   {
+    userId: { type: String },
     transactionAmount: { type: Number },
-    // transactionStatus: { type: String },
     transactionDate: { type: String },
     transactionDestination: { type: String },
     transactionType: { type: String },

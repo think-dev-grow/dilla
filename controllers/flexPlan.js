@@ -548,6 +548,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const date = `${day}-${month}-${year}  ${hour}:${check}`;
 
   const transaction = new Transaction({
+    userId: id,
     transactionAmount: amount,
     transactionType: "credit",
     transactionDate: date,
