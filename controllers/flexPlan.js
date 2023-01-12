@@ -603,4 +603,5 @@ module.exports = {
   calcIntrest,
   activatePlanAPI,
   topUp,
+  getFlexTransactionHistory,
 };
