@@ -515,7 +515,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const { amount } = req.body;
   const id = req.user.id;
 
-  const day = new Date().getDay();
+  const day = new Date().getDate();
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
 
@@ -550,7 +550,7 @@ const topUp = asyncHandler(async (req, res, next) => {
   const transaction = new Transaction({
     transactionAmount: amount,
     transactionType: "credit",
-    transactionDate: `${new Date()}`,
+    transactionDate: date,
     transactionDestination: "flex",
   });
 
