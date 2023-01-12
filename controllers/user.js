@@ -166,7 +166,7 @@ const nextOfKin = asyncHandler(async (req, res) => {
   }
 
   const data = await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user.id },
     { $set: { nextOfKin: nextOfKinDetails } },
     { new: true }
   );
