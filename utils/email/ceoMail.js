@@ -22,81 +22,82 @@ const ceoMail = (to, name) => {
         },
       ],
       subject: "CEO of Ardilla",
-      htmlbody: ` <center style=" width: 100%;table-layout: fixed; padding-bottom: 60px;padding-top: 20px;">
-      <table width="100%" cellpadding="0" cellspacing="0" style=" max-width: 600px !important; margin: 0 auto; border: 1px solid #eee;border-spacing: 0;
-      background-image: url(https://i.postimg.cc/pXgHF8bN/Background-2.png);">
-        <tr>
-          <td >
-              <div style="padding: 20px;display: flex ;justify-content: center;align-items: center;">
-                  <img style="width: 104.06px;height: 38.77px; margin-top: 70px;" src="https://i.postimg.cc/sfLPy9jp/new-Logo-with-slogan-2.png" alt="Logo">
-                     
-              </div >
-              <div style="padding: 20px; text-align: center; margin-top: -20px;">
-                  <hr style="color: gray/300;border: 1px solid black">  
-              </div>
-                  
-              <div style="padding:20px;text-align: center;">
-                  <p style="font-size: 18px;font-weight: 500;color: gray/600 ;font-family: 'ubuntu',sans-serif; text-align:justify"><b>Hi ${name},</p>
-              </div>        
-              <div style="display: flex; padding: 20px;">
-                          <div style="float: left;">
-                              <img style=" width: 190px; height:150px;" src="https://i.postimg.cc/66GsBcVK/Left.png" alt="Frame-1">
-                          </div>
-                         <p style="font-size: 12px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600; text-align: center;"><span style="color: black;font-size: 14px;"><b>My name is Onyinye Cheryl Dallas,<br>CEO of Ardilla.</span><br><b>Having you on board in the Ardilla community means so much to the team. We are eager to help you start your journey to building wealth.<br>
-                                                          <br>Freedom means different things to everyone, but at Ardilla, it means making smart financial decisions today so that we live tomorrow without restrictions.</p>     
-                          <div style="float: right; margin-top: -25px;">                    
-                              <img  width="90px"  src="https://i.postimg.cc/ZnJqzQ9T/Mask-group.png" alt="Mask">                     
-                          </div>
+      htmlbody: ` <body style=" background-image: url(https://i.postimg.cc/g0B05pW5/background-6.png);">
+      <center style=" width: 100%;table-layout: fixed; padding-bottom: 60px;padding-top: 20px;">
+       <table width="100%" cellpadding="0" cellspacing="0" style=" max-width: 600px !important; margin: 0 auto; border: 1px solid #eee;border-spacing: 0;
+       background-image: url(https://i.postimg.cc/pXgHF8bN/Background-2.png);">
+         <tr>
+           <td>
+               <div style="text-align: center;">
+                   <img style="width: 104.06px;height: 38.77px; margin-top: 70px;" src="https://i.postimg.cc/sfLPy9jp/new-Logo-with-slogan-2.png" alt="Logo">     
+               </div >
+               <div style="padding: 20px; text-align: center; margin-top: -20px;">
+                   <hr style="color: gray/300;border: 1px solid black">  
                </div>
-               
-              <div style="padding: 20px; display: flex;">
-                  <p style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600;margin-top: 35px;">
-                      <b>There are quite a number of tools on the Ardilla platform,including savings, investments, and financial education, that allows you take charge of your future now.
-                     </p>
-                  <div>
-                      <img   style=" width: 190px;height: 150px;" src="https://i.postimg.cc/52sKBQ5p/Right.png" alt="Frame-2">
-                  </div>
-                     
+                   
+               <div style="padding:20px;text-align: center;">
+                   <p style="font-size: 18px;font-weight: 500;color: gray/600 ;font-family: 'ubuntu',sans-serif; text-align:justify"><b>Hi ${name},</p>
+               </div>        
+               <div style="display: flex; padding: 20px;">
+                           <div style="float: left;">
+                               <img style=" width: 190px; height:150px;" src="https://i.postimg.cc/66GsBcVK/Left.png" alt="Frame-1">
+                           </div>
+                          <p style="font-size: 12px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600; text-align: center;"><span style="color: black;font-size: 14px;"><b>My name is Onyinye Cheryl Dallas,<br>CEO of Ardilla.</span><br><b>Having you on board in the Ardilla community means so much to the team. We are eager to help you start your journey to building wealth.<br>
+                                                           <br>Freedom means different things to everyone, but at Ardilla, it means making smart financial decisions today so that we live tomorrow without restrictions.</p>     
+                           <div style="float: right; margin-top: -25px;">                    
+                               <img  width="90px"  src="https://i.postimg.cc/x82458mc/Mask-group-1.png" alt="Mask">                     
+                           </div>
+               </div>
+                
+               <div style="padding: 20px; display: flex;">
+                   <p style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600;margin-top: 35px;">
+                       <b>There are quite a number of tools on the Ardilla platform,including savings, investments, and financial education, that allows you take charge of your future now.
+                      </p>
+                   <div>
+                       <img   style=" width: 190px;height: 150px;" src="https://i.postimg.cc/52sKBQ5p/Right.png" alt="Frame-2">
+                   </div>
                       
-                  
-              </div>
-                  
-              <div style="padding: 20px; text-align: center; margin-top: 25px;">
-                  <p style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600;">
-                    <b>I look forward to your journey. I am sure it will be great. Please do not hesitate to contact our team if you need assistance.<br>We are available to you 24/7.</p>
-                     
-              </div>
-              <div style="display:flex; justify-content: center">
-                  <a href="#"><img src="https://i.postimg.cc/4xWCWKV1/Capture.png" alt="download"></a>
-              </div>
-             
-              <div style="margin-top: 10px;">
-                  <h3 style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;text-align: center;color: gray/600;"><b>Ardilla, 33B, Ogundana street, Allen, Ikeja, Lagos</h3>
-                    
-              </div>
-              <div style="display: flex;justify-content: center;align-items: center; padding: 20px;">
+                       
+                   
+               </div>
+                   
+               <div style="padding: 20px; text-align: center; margin-top: 25px;">
+                   <h3 style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;color: gray/600;">
+                     <b>I look forward to your journey. I am sure it will be great. Please do not hesitate to contact our team if you need assistance.We are available to you 24/7.</h3>
                       
-                  <a href="https://www.facebook.com/"><img  src="https://i.postimg.cc/GhQbjbMk/Facebook-logo.png" alt="Facebook-icon"></a>
-                  <a href="http://linkedin.com/"><img style="padding-left: 15px;"  src="https://i.postimg.cc/8cZnjXHr/linkedin-logo.png" alt="Linkedin-icon"></a>
-                  <a href="https://twitter.com/"><img style="padding-left: 15px;"  src="https://i.postimg.cc/pX9BfdVS/twitter-logo.png" alt="Twitter-icon"></a>
-              </div>
-  
-              <div style="text-align: center;padding: 20px;">
-                  <h3 style="color: gray/600;font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;"><b>You are receiving this message because you signed up on Ardilla.  If you would like to stop receiving tips on financial literacy, you can opt out by clicking unsubscribe. For more information about how we process data please see our Privacy Policy. </h3>
-                  <p style="color: #4B5563;height: 26px;font-size: 14.2px;font-weight: 600; "><b>The Ardilla Team</p>
-                  <p style="font-size: 12.86px;color: #6B7280;font-weight: 500;font-family: 'ubunt',sans-serif;font-style: normal; margin-top: 20px;">Copyright © 2022 Ardilla. All rights reserved.</p>
-    
-              </div>
-  
-          </td>
-  
+               </div>
+               <div style="text-align: center;">
+                   <a href="#"><img src="https://i.postimg.cc/4xWCWKV1/Capture.png" alt="download"></a>
+               </div>
+              
+               <div style="margin-top: 10px;">
+                   <h3 style="font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;text-align: center;color: gray/600;"><b>Ardilla, 33B, Ogundana street, Allen, Ikeja, Lagos</h3>
+                     
+               </div>
+               <div style="margin:0 auto;text-align: center; margin-top:30px; display: flex; align-items: center;justify-content: space-between;width: 200px;">
+                       
+                   <a href="https://www.facebook.com/"><img  src="https://i.postimg.cc/GhQbjbMk/Facebook-logo.png" alt="Facebook-icon"></a>
+                   <a href="http://linkedin.com/"><img src="https://i.postimg.cc/8cZnjXHr/linkedin-logo.png" alt="Linkedin-icon"></a>
+                   <a href="https://twitter.com/"><img src="https://i.postimg.cc/pX9BfdVS/twitter-logo.png" alt="Twitter-icon"></a>
+               </div>
+   
+               <div style="text-align: center;padding: 20px;">
+                   <h3 style="color: gray/600;font-size: 13px;font-weight: 600;font-family: 'ubuntu',sans-serif;"><b>You are receiving this message because you signed up on Ardilla.  If you would like to stop receiving tips on financial literacy, you can opt out by clicking unsubscribe. For more information about how we process data please see our Privacy Policy. </h3>
+                   <p style="color: #4B5563;height: 26px;font-size: 14.2px;font-weight: 600; "><b>The Ardilla Team</p>
+                   <p style="font-size: 12.86px;color: #6B7280;font-weight: 500;font-family: 'ubunt',sans-serif;font-style: normal; margin-top: 20px;">Copyright © 2022 Ardilla. All rights reserved.</p>
+     
+               </div>
+   
+           </td>
+   
+          
+         </tr>
          
-        </tr>
-        
-        
-      
-      </table>
-     </center>  `,
+         
+       
+       </table>
+      </center> 
+   </body>`,
     })
     .then((resp) => console.log("success", resp))
     .catch((error) => console.log("error", error));
