@@ -93,4 +93,4 @@ const generatedAccountNumberMail = (to, value, name) => {
     });
 };
 
-module.exports = sendVerificationMail;
+module.exports = generatedAccountNumberMail;

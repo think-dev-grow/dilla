@@ -3,6 +3,8 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const randomize = require("randomatic");
 
+const generatedAccountNumberMail = require("../utils/email/generateAccount");
+
 const createSanAccount = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
@@ -44,6 +46,12 @@ const createSanAccount = asyncHandler(async (req, res) => {
     );
 
     const data = await sanDetails.save();
+
+    generatedAccountNumberMail(
+      user.email,
+      generatedAccountNumber,
+      user.kodeHex
+    );
 
     res.status(200).json({
       success: true,
