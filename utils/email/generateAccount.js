@@ -55,9 +55,7 @@ const generatedAccountNumberMail = (to, value, name) => {
   
                             <img style="margin-top: 40px;" src="https://i.postimg.cc/GtXGRFmK/Mask-group.png" alt="illustration">
   
-                            <p style="font-size: 16px;font-weight: 500;font-family: 'ubuntu',sans-serif;text-align: center;color:#4B5563; margin-top: 41px;">
-                           Hi ${name}
-                          </p>
+                         
   
                           
   
