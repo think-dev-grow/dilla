@@ -9,7 +9,7 @@ const router = express.Router();
 
 const protect = require("../middlewares/authMiddleware");
 
-router.post("/create-account", protect, createSanAccount);
+router.get("/create-account", protect, createSanAccount);
 
 router.get("/get-san-account", protect, getSanAccount);
 
