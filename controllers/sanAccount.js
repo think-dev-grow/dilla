@@ -30,18 +30,19 @@ const createSanAccount = asyncHandler(async (req, res) => {
     user.idFrontStatus === "approved" &&
     user.utilityBillStatus === "approved"
   ) {
-    let generatedAccountNumber = randomize(0, 10);
+    // let generatedAccountNumber = randomize(0, 10);
+    var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
 
     const sanDetails = new San({
       accountName: name,
       userID: id,
-      accountNumber: generatedAccountNumber,
+      accountNumber: digits,
     });
 
     await User.findOneAndUpdate(
       { _id: id },
       {
-        $set: { uid: generatedAccountNumber },
+        $set: { uid: digits },
       },
       { new: true }
     );
