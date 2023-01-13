@@ -271,14 +271,14 @@ const securityQusetion = asyncHandler(async (req, res) => {
 //Answer security question
 const answerSQ = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
-  const { answer } = req.body;
+  const { ans } = req.body;
 
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
   }
 
-  const checkAnswer = bcrypt.compareSync(answer, user.securityQusetion.answer);
+  const checkAnswer = bcrypt.compareSync(ans, user.securityQusetion.answer);
 
   if (!checkAnswer) {
     res.status(400);
