@@ -305,12 +305,10 @@ const addBVN = asyncHandler(async (req, res) => {
     throw new Error("invalid BVN");
   }
 
-  const point = user.kycPoints + 25;
-
   await User.findOneAndUpdate(
     { _id: id },
     {
-      $set: { bvn: bvn, verified: "bvn", kycPoints: point },
+      $set: { bvn: bvn, verified: "bvn" },
     },
     { new: true }
   );
@@ -362,9 +360,11 @@ const updateMobileVerification = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  const point = check.kycPoints + 25;
+
   await User.findOneAndUpdate(
     { _id: check._id },
-    { $set: { verified: "mv" } },
+    { $set: { verified: "mv", kycPoints: point } },
     { new: true }
   );
 
