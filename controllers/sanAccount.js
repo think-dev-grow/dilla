@@ -56,11 +56,6 @@ const createSanAccount = asyncHandler(async (req, res) => {
       msg: "SAN account has been created succesfully",
       data,
     });
-  } else {
-    res.status(400).json({
-      success: true,
-      msg: "All Kyc must be approved first",
-    });
   }
 });
 
