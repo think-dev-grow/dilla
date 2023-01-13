@@ -49,11 +49,7 @@ const createSanAccount = asyncHandler(async (req, res) => {
 
     const data = await sanDetails.save();
 
-    generatedAccountNumberMail(
-      user.email,
-      generatedAccountNumber,
-      user.kodeHex
-    );
+    generatedAccountNumberMail(user.email, digits, user.kodeHex);
 
     res.status(200).json({
       success: true,
