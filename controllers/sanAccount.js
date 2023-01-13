@@ -25,7 +25,8 @@ const createSanAccount = asyncHandler(async (req, res) => {
   if (
     user.idBackStatus === "approved" &&
     user.idFrontStatus === "approved" &&
-    user.utilityBillStatus === "approved"
+    user.utilityBillStatus === "approved" &&
+    !user.uid
   ) {
     const sanDetails = new San({
       accountName: name,
