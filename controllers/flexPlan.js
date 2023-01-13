@@ -3,6 +3,7 @@ const FlexPlan = require("../models/FlexPlan");
 const Transaction = require("../models/Transaction");
 var abbreviate = require("number-abbreviate");
 const asyncHandler = require("express-async-handler");
+const randomize = require("randomatic");
 
 const createFP = asyncHandler(async (req, res) => {
   const flexAcct = await FlexPlan.findOne({ userID: req.user.id });
@@ -18,6 +19,7 @@ const createFP = asyncHandler(async (req, res) => {
   if (!flexAcct) {
     const data = new FlexPlan({
       userID: req.user.id,
+      accountNumber: randomize(0, 10),
     });
 
     const flexPlan = await data.save();
@@ -35,6 +37,7 @@ const createFP = asyncHandler(async (req, res) => {
 
     const data = new FlexPlan({
       userID: req.user.id,
+      accountNumber: randomize(0, 10),
     });
 
     const flexPlan = await data.save();

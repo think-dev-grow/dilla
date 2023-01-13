@@ -9,6 +9,8 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const flexPlanRoutes = require("./routes/flexplan");
 const targetPlanRoutes = require("./routes/targetPlan");
+const dillaWalletRoutes = require("./routes/dillaWallet");
+const sanAccountRoutes = require("./routes/sanAccount");
 const errorHandler = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -32,6 +34,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/flex", flexPlanRoutes);
 app.use("/api/target", targetPlanRoutes);
+app.use("/api/dilla-wallet", dillaWalletRoutes);
+app.use("/api/san", sanAccountRoutes);
 
 //Routes
 app.get("/", (req, res) => {

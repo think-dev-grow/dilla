@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const randomize = require("randomatic");
 
 const TargetSchema = new mongoose.Schema(
   {
