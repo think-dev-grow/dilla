@@ -12,12 +12,12 @@ const createSanAccount = asyncHandler(async (req, res) => {
 
   const user = await User.findById(id);
 
-  const name = `${user.firstname} ${user.lastname}`;
-
   if (!user) {
     res.status(400);
     throw new Error("User does not exist");
   }
+
+  const name = `${user.firstname} ${user.lastname}`;
 
   if (sanAcct) {
     res.status(400);
