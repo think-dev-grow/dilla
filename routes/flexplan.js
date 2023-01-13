@@ -18,7 +18,7 @@ const {
 
 const protect = require("../middlewares/authMiddleware");
 
-router.post("/create-account", protect, createFP);
+router.get("/create-account", protect, createFP);
 
 router.put("/set-earning", protect, autoFlexPlanEarn);
 
