@@ -28,11 +28,20 @@ const createSanAccount = asyncHandler(async (req, res) => {
     user.idFrontStatus === "approved" &&
     user.utilityBillStatus === "approved"
   ) {
+    const generatedAccountNumber = randomize(0, 10);
     const sanDetails = new San({
       accountName: name,
       userID: id,
-      accountNumber: randomize(0, 10),
+      accountNumber: generatedAccountNumber,
     });
+
+    await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: { uid: generatedAccountNumber },
+      },
+      { new: true }
+    );
 
     const data = await sanDetails.save();
 
