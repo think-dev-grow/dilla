@@ -30,7 +30,8 @@ const createSanAccount = asyncHandler(async (req, res) => {
     user.idFrontStatus === "approved" &&
     user.utilityBillStatus === "approved"
   ) {
-    const generatedAccountNumber = randomize(0, 10);
+    let generatedAccountNumber = randomize(0, 10);
+
     const sanDetails = new San({
       accountName: name,
       userID: id,
