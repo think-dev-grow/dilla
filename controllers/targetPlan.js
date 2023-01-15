@@ -2,7 +2,7 @@ const TargetPlan = require("../models/TargetPlan");
 var abbreviate = require("number-abbreviate");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
-const randomize = require("randomatic");
+// const randomize = require("randomatic");
 
 const createTP = asyncHandler(async (req, res) => {
   const id = req.user.id;
@@ -14,9 +14,11 @@ const createTP = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
+
   const data = new TargetPlan({
     userID: id,
-    accountNumber: randomize(0, 10),
+    accountNumber: digits,
   });
 
   const targetPlan = await data.save();
