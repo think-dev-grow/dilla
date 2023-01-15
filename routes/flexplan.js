@@ -36,7 +36,7 @@ router.put("/saving-period", protect, setSavingPeriod);
 
 router.get("/calculate-intrest", protect, calcIntrest);
 
-router.put("/activate-plan", protect, activatePlanAPI);
+router.get("/activate-plan", protect, activatePlanAPI);
 
 router.put("/flex-top-up", protect, topUp);
 
