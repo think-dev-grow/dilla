@@ -17,9 +17,10 @@ const createFP = asyncHandler(async (req, res) => {
 
   //create an acct if there's none
   if (!flexAcct) {
+    var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
     const data = new FlexPlan({
       userID: req.user.id,
-      accountNumber: randomize(0, 10),
+      accountNumber: digits,
     });
 
     const flexPlan = await data.save();
