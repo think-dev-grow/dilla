@@ -52,7 +52,8 @@ const createFP = asyncHandler(async (req, res) => {
 
   //if there an acct and it has been activated
   if (flexAcct && flexAcct.activatePlan) {
-    return next(handleError(400, "you already have a Flex account."));
+    res.status(400);
+    throw new Error("you already have a Flex account.");
   }
 });
 
