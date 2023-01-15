@@ -63,7 +63,7 @@ const autoFlexPlanEarn = asyncHandler(async (req, res) => {
 
   const user = await User.findById(req.user.id);
 
-  const flexAcct = await FlexPlan.findOne({ _id: id });
+  const flexAcct = await FlexPlan.findOne({ userID: id });
 
   if (!user) {
     res.status(400);
