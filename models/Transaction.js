@@ -5,6 +5,7 @@ const TransactionSchema = new mongoose.Schema(
     userId: { type: String },
     transactionAmount: { type: Number },
     transactionDate: { type: String },
+    transactionTime: { type: String },
     transactionDestination: { type: String },
     transactionType: { type: String },
   },

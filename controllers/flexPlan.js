@@ -549,13 +549,15 @@ const topUp = asyncHandler(async (req, res) => {
     throw new Error("Please input the amount you want to save.");
   }
 
-  const date = `${day}-${month}-${year}  ${hour}:${check}`;
+  const date = `${day}-${month}-${year}  `;
+  const time = `${hour}:${check}`;
 
   const transaction = new Transaction({
     userId: id,
     transactionAmount: amount,
-    transactionType: "credit",
+    transactionType: "Top Up",
     transactionDate: date,
+    transactionTime: time,
     transactionDestination: "flex",
   });
 
@@ -576,24 +578,20 @@ const topUp = asyncHandler(async (req, res) => {
     .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
-const getFlexTransactionHistory = async (req, res, next) => {
-  try {
-    const id = req.user.id;
+const getFlexTransactionHistory = asyncHandler(async (req, res) => {
+  const id = req.user.id;
 
-    const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id);
 
-    if (!user) {
-      res.status(400);
-      throw new Error("User does not exist.");
-    }
-
-    const transactionHistory = await Transaction.find({ userId: id });
-
-    res.status(200).json({ msg: "done", transactionHistory });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
   }
-};
+
+  const transactionHistory = await Transaction.find({ userId: id });
+
+  res.status(200).json({ msg: "done", transactionHistory });
+});
 
 module.exports = {
   createFP,
