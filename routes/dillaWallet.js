@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   createDillaWallet,
-  //   topUp,
+  topUp,
   //   transferMoneyToDilla,
   getDillaWallet,
   //   transferToMySan,
@@ -15,7 +15,7 @@ const protect = require("../middlewares/authMiddleware");
 
 router.post("/create-account", protect, createDillaWallet);
 
-// router.put("/top-up-account/:id", topUp);
+router.put("/top-up-account", protect, topUp);
 
 // router.put("/transfer/:id", transferMoneyToDilla);
 
