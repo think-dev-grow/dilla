@@ -7,6 +7,7 @@ const FlexSchema = new mongoose.Schema(
     name: { type: String },
     earn: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },
+    expRange: { type: String },
     accountBalance: { type: Number, default: 0 },
     accountNumber: { type: Number, default: 0 },
     autoSavingTarget: { type: Number, default: 0 },

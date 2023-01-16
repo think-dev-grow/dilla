@@ -136,6 +136,8 @@ const autoFlexPlanExp = asyncHandler(async (req, res) => {
 
   const autoDuration = autoSavingTarget / autoSavingRate;
 
+  const range = fpData.psr[index];
+
   // Cast (run check)
 
   const plan = await FlexPlan.findOneAndUpdate(
@@ -143,6 +145,7 @@ const autoFlexPlanExp = asyncHandler(async (req, res) => {
     {
       $set: {
         exp: fpData.cPsr[index],
+        expRange: range,
         autoDuration,
         autoSavingTarget,
         autoSavingRate,
