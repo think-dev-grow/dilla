@@ -16,6 +16,7 @@ const {
   loginStatus,
   forgotPassword,
   resetPassword,
+  getMobilePin,
 } = require("../controllers/auth");
 const router = express.Router();
 
@@ -40,6 +41,8 @@ router.put("/set-pin", protect, setPin);
 router.put("/mobile-otp", protect, mobileVerification);
 
 router.get("/mobile-otp-2", protect, updateMobileVerification);
+
+router.get("/mobile-otp-3", protect, getMobilePin);
 
 router.put("/wrong-contact", protect, wrongContact);
 

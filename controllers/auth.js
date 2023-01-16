@@ -321,34 +321,30 @@ const addBVN = asyncHandler(async (req, res) => {
 
 //Mobile verification
 const mobileVerification = asyncHandler(async (req, res) => {
-  try {
-    const { id } = req.user;
-    const { pin } = req.body;
+  const { id } = req.user;
+  const { pin } = req.body;
 
-    const user = await User.findById(id);
+  const user = await User.findById(id);
 
-    if (!user) {
-      res.status(400);
-      throw new Error("User does not exist.");
-    }
-
-    const point = user.kycPoints + 25;
-
-    await User.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: { mobilePinId: pin, kycPoints: point },
-      },
-      { new: true }
-    );
-
-    res.status(200).json({
-      success: true,
-      msg: `Successfull `,
-    });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
   }
+
+  const point = user.kycPoints + 25;
+
+  await User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: { mobilePinId: pin, kycPoints: point },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Successfull `,
+  });
 });
 
 //Mobile verification 2 (update the process)
@@ -371,6 +367,26 @@ const updateMobileVerification = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: `Successfull `,
+  });
+});
+
+//Mobile verification 3
+const getMobilePin = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  const pin = user.mobilePinId;
+
+  res.status(200).json({
+    success: true,
+    msg: `Successfull `,
+    pin,
   });
 });
 
@@ -585,4 +601,5 @@ module.exports = {
   logOut,
   Login,
   loginStatus,
+  getMobilePin,
 };
