@@ -562,6 +562,7 @@ const topUp = asyncHandler(async (req, res) => {
     transactionDate: date,
     transactionTime: time,
     transactionDestination: "flex",
+    transactionReciept: reference,
   });
 
   const data = await transaction.save();
