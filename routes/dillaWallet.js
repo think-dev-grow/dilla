@@ -13,7 +13,7 @@ const router = express.Router();
 
 const protect = require("../middlewares/authMiddleware");
 
-router.post("/create-account", protect, createDillaWallet);
+router.get("/create-account", protect, createDillaWallet);
 
 router.put("/top-up-account", protect, topUp);
 
