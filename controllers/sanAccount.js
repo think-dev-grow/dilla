@@ -59,27 +59,23 @@ const createSanAccount = asyncHandler(async (req, res) => {
 });
 
 const getSanAccount = asyncHandler(async (req, res) => {
-  try {
-    const id = req.user.id;
+  const id = req.user.id;
 
-    const user = await User.findById(id);
+  const user = await User.findById(id);
 
-    if (!user) {
-      res.status(400);
-      throw new Error("User does not exist");
-    }
-
-    const sanAccount = await San.findOne({ userID: id });
-
-    if (sanAccount) {
-      res.status(400);
-      throw new Error("You don't have dilla wallet account.");
-    }
-
-    res.status(200).json({ success: true, sanAccount });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist");
   }
+
+  const sanAccount = await San.findOne({ userID: id });
+
+  if (sanAccount) {
+    res.status(400);
+    throw new Error("You don't have san account.");
+  }
+
+  res.status(200).json({ success: true, sanAccount });
 });
 
 module.exports = {
