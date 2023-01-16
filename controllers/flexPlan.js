@@ -519,7 +519,7 @@ const calcIntrest = async (req, res) => {
 };
 
 const topUp = asyncHandler(async (req, res) => {
-  const { amount } = req.body;
+  const { amount, reference } = req.body;
   const id = req.user.id;
 
   const day = new Date().getDate();

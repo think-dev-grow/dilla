@@ -8,6 +8,7 @@ const TransactionSchema = new mongoose.Schema(
     transactionTime: { type: String },
     transactionDestination: { type: String },
     transactionType: { type: String },
+    transactionReciept: { type: Object },
   },
   { timestamps: true }
 );
