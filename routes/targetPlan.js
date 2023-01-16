@@ -16,7 +16,7 @@ const {
 
 const protect = require("../middlewares/authMiddleware");
 
-router.post("/create-account", protect, createTP);
+router.get("/create-account", protect, createTP);
 
 router.put("/Target-plan-name", protect, targetPlanName);
 
