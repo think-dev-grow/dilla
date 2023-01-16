@@ -70,10 +70,10 @@ const getSanAccount = asyncHandler(async (req, res) => {
 
   const sanAccount = await San.findOne({ userID: id });
 
-  if (sanAccount) {
-    res.status(400);
-    throw new Error("You don't have san account.");
-  }
+  // if (sanAccount) {
+  //   res.status(400);
+  //   throw new Error("You don't have san account.");
+  // }
 
   res.status(200).json({ success: true, sanAccount });
 });
