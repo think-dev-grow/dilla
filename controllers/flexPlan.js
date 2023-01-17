@@ -1,9 +1,11 @@
 const User = require("../models/User");
 const FlexPlan = require("../models/FlexPlan");
 const Transaction = require("../models/Transaction");
+const DillaWallet = require("../models/DillaWallet");
 var abbreviate = require("number-abbreviate");
 const asyncHandler = require("express-async-handler");
 const randomize = require("randomatic");
+const bcrypt = require("bcryptjs");
 
 const createFP = asyncHandler(async (req, res) => {
   const flexAcct = await FlexPlan.findOne({ userID: req.user.id });
@@ -560,11 +562,13 @@ const topUp = asyncHandler(async (req, res) => {
 
   const transaction = new Transaction({
     userId: id,
+    transactionPlatform: "Flex",
     transactionAmount: amount,
     transactionType: "Top Up",
     transactionDate: date,
     transactionTime: time,
-    transactionDestination: "flex",
+    // transactionDestination: "flex",
+    // transactionOrigin: "flex",
     transactionReciept: reference,
   });
 
@@ -583,6 +587,125 @@ const topUp = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json({ msg: "Top up successful", topUp, data, success: true, day });
+});
+
+const flexToDilla = asyncHandler(async (req, res) => {
+  const { answer, pin, amount } = req.body;
+  const id = req.user.id;
+
+  const user = await User.findById(id);
+
+  const flexPlan = await FlexPlan.findOne({
+    userID: id,
+  });
+
+  const dillaWallet = await DillaWallet.findOne({
+    userID: id,
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!flexPlan) {
+    res.status(400);
+    throw new Error(
+      "You can't perform this action, because you do not have a flex account"
+    );
+  }
+
+  if (!dillaWallet) {
+    res.status(400);
+    throw new Error(
+      "Unable to perform this action, because you do not have a dilla wallet"
+    );
+  }
+
+  if (!answer) {
+    res.status(404);
+    throw new Error("Please enter the answer to your security question");
+  }
+
+  if (!pin) {
+    res.status(404);
+    throw new Error("Please enter  your pin");
+  }
+
+  const checkAnswer = bcrypt.compareSync(answer, user.securityQusetion.answer);
+
+  if (!checkAnswer) {
+    res.status(400);
+    throw new Error("incorrect answer");
+  }
+
+  const checkPin = bcrypt.compareSync(pin, user.transactionPin);
+
+  if (!checkPin) {
+    res.status(400);
+    throw new Error("incorrect pin");
+  }
+
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+  const hour = new Date().getHours() + 1;
+  const minute = new Date().getMinutes();
+
+  const check = minute <= 9 ? `0${minute}` : minute;
+
+  const date = `${day}-${month}-${year}  `;
+  const time = `${hour}:${check}`;
+
+  const flexTransactionHistory = new Transaction({
+    userId: id,
+    transactionAmount: amount,
+    transactionPlatform: "Flex",
+    transactionType: "Withdraw",
+    transactionDate: date,
+    transactionTime: time,
+  });
+
+  const data = await flexTransactionHistory.save();
+
+  //Debit Flex Account
+  const debitFlex = await FlexPlan.findOneAndUpdate(
+    { userID: id },
+    {
+      $set: {
+        accountBalance: flexPlan.accountBalance - amount,
+      },
+    },
+    { new: true }
+  );
+
+  //Credit Dilla Wallet
+  const creditDillaWallet = await DillaWallet.findOneAndUpdate(
+    { userID: id },
+    { $set: { accountBalance: dillaWallet.accountBalance + amount } },
+    { new: true }
+  );
+
+  const dillaTransactionHistory = new Transaction({
+    userId: id,
+    transactionAmount: amount,
+    transactionPlatform: "Dilla",
+    transactionType: "Top Up",
+    transactionDate: date,
+    transactionTime: time,
+  });
+
+  const data2 = await dillaTransactionHistory.save();
+
+  res.status(200).json({
+    msg: "Transfer successful",
+    creditDillaWallet,
+    flex: data,
+    dilla: data2,
+    debitFlex,
+    success: true,
+  });
 });
 
 const getFlexTransactionHistory = asyncHandler(async (req, res) => {
@@ -613,4 +736,5 @@ module.exports = {
   activatePlanAPI,
   topUp,
   getFlexTransactionHistory,
+  flexToDilla,
 };
