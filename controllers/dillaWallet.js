@@ -52,10 +52,10 @@ const getDillaWallet = asyncHandler(async (req, res) => {
 
   const dillaWallet = await DillaWallet.findOne({ userID: id });
 
-  if (dillaWallet) {
-    res.status(400);
-    throw new Error("You don't have dilla wallet account.");
-  }
+  // if (dillaWallet) {
+  //   res.status(400);
+  //   throw new Error("You don't have dilla wallet account.");
+  // }
 
   res.status(200).json({ success: true, dillaWallet });
 });
