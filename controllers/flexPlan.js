@@ -723,7 +723,10 @@ const getFlexTransactionHistory = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  const transactionHistory = await Transaction.find({ userId: id }).sort({
+  const transactionHistory = await Transaction.find({
+    userId: id,
+    transactionPlatform: "Flex",
+  }).sort({
     _id: -1,
   });
 
