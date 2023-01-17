@@ -41,27 +41,23 @@ const createDillaWallet = asyncHandler(async (req, res) => {
 });
 
 const getDillaWallet = asyncHandler(async (req, res) => {
-  try {
-    const id = req.user.id;
+  const id = req.user.id;
 
-    const user = await User.findById(id);
+  const user = await User.findById(id);
 
-    if (!user) {
-      res.status(400);
-      throw new Error("User does not exist");
-    }
-
-    const dillaWallet = await DillaWallet.findOne({ userID: id });
-
-    if (dillaWallet) {
-      res.status(400);
-      throw new Error("You don't have dilla wallet account.");
-    }
-
-    res.status(200).json({ success: true, dillaWallet });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist");
   }
+
+  const dillaWallet = await DillaWallet.findOne({ userID: id });
+
+  if (dillaWallet) {
+    res.status(400);
+    throw new Error("You don't have dilla wallet account.");
+  }
+
+  res.status(200).json({ success: true, dillaWallet });
 });
 
 // const topUp = async (req, res, next) => {
