@@ -632,6 +632,11 @@ const flexToDilla = asyncHandler(async (req, res) => {
     throw new Error("Please enter  your pin");
   }
 
+  if (amount > flexPlan.accountBalance) {
+    res.status(404);
+    throw new Error("Insufficient Funds");
+  }
+
   const checkAnswer = bcrypt.compareSync(answer, user.securityQusetion.answer);
 
   if (!checkAnswer) {
