@@ -331,12 +331,10 @@ const mobileVerification = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  const point = user.kycPoints + 25;
-
   await User.findOneAndUpdate(
     { _id: id },
     {
-      $set: { mobilePinId: pin, kycPoints: point },
+      $set: { mobilePinId: pin },
     },
     { new: true }
   );
