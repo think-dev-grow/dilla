@@ -60,63 +60,8 @@ const getDillaWallet = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, dillaWallet });
 });
 
-// const topUp = async (req, res, next) => {
-//   try {
-//     const { amount, email } = req.body;
-//     const id = req.params.id;
-
-//     // const value;
-
-//     const day = new Date().getDay();
-//     const month = new Date().getMonth();
-//     const year = new Date().getFullYear();
-
-//     const hour = new Date().getHours();
-//     const minute = new Date().getMinutes();
-
-//     const check = minute <= 9 ? `0${minute}` : minute;
-
-//     const dillaWallet = await DillaWallet.findOne({
-//       userID: id,
-//     });
-
-//     if (!dillaWallet)
-//       return next(handleError(400, "Hey ,you dont have a dilla wallet yet"));
-
-//     if (dillaWallet.userID !== id)
-//       return next(handleError(400, "This is not your account"));
-
-//     const transcactionHistoryData = {
-//       amount,
-//       email,
-//       date: `${day}-${month}-${year}`,
-//       time: `${hour}:${check}`,
-//       transactionType: "Credit",
-//     };
-
-//     const topUp = await DillaWallet.findOneAndUpdate(
-//       { userID: id },
-//       {
-//         $set: {
-//           accountBalance: dillaWallet.accountBalance + amount,
-//           transcactionHistory: [
-//             ...dillaWallet.transcactionHistory,
-//             transcactionHistoryData,
-//           ],
-//         },
-//       },
-//       { new: true }
-//     );
-
-//     res.status(200).json({ msg: "Top up successful", topUp, success: true });
-//     // res.status(200).json({ id, dillaWallet, transcactionHistoryData, topUp });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 const topUp = asyncHandler(async (req, res) => {
-  const { amount } = req.body;
+  const { amount, reference } = req.body;
   const id = req.user.id;
 
   const day = new Date().getDate();
@@ -141,7 +86,9 @@ const topUp = asyncHandler(async (req, res) => {
 
   if (!dw) {
     res.status(400);
-    throw new Error("You can't perform this action");
+    throw new Error(
+      "You can't perform this action, because you do not have a Dilla Wallet"
+    );
   }
 
   if (!amount) {
@@ -154,11 +101,12 @@ const topUp = asyncHandler(async (req, res) => {
 
   const transaction = new Transaction({
     userId: id,
+    transactionPlatform: "Dilla",
     transactionAmount: amount,
     transactionType: "Top Up",
     transactionDate: date,
     transactionTime: time,
-    transactionDestination: "dilla",
+    transactionReciept: reference,
   });
 
   const data = await transaction.save();
@@ -178,11 +126,32 @@ const topUp = asyncHandler(async (req, res) => {
     .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
+const getDillaTransactionHistory = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  const transactionHistory = await Transaction.find({
+    userId: id,
+    transactionPlatform: "Dilla",
+  }).sort({
+    _id: -1,
+  });
+
+  res.status(200).json({ msg: "done", transactionHistory });
+});
+
 module.exports = {
   createDillaWallet,
   topUp,
   // transferMoneyToDilla,
   getDillaWallet,
+  getDillaTransactionHistory,
   // transferToMySan,
   // requestMoney,
 };
