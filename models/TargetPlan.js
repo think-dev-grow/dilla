@@ -24,6 +24,7 @@ const TargetSchema = new mongoose.Schema(
     breakdown: { type: Array },
     paymentDate: { type: String },
     activatePlan: { type: Boolean, default: false },
+    targetStatus: { type: String },
   },
   { timestamps: true }
 );

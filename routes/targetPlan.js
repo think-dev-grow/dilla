@@ -13,6 +13,7 @@ const {
   setSavingPeriod,
   calcIntrest,
   activatePlanAPI,
+  targetPlanStatus,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -34,6 +35,8 @@ router.put("/custom-duration", protect, customTargetPlanDuration);
 router.get("/get-target-account", protect, getTargetPlanAccount);
 
 router.put("/saving-period", protect, setSavingPeriod);
+
+router.put("/set-status", protect, targetPlanStatus);
 
 router.get("/calculate-intrest", protect, calcIntrest);
 
