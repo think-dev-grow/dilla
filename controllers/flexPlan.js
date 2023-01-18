@@ -288,10 +288,10 @@ const getFlexPlanAccount = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  if (!flexPlan) {
-    res.status(400);
-    throw new Error("You can't perform this action");
-  }
+  // if (!flexPlan) {
+  //   res.status(400);
+  //   throw new Error("You can't perform this action");
+  // }
 
   res.status(200).json({ success: true, flexPlan });
 });
