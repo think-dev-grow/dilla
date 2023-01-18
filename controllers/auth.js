@@ -205,7 +205,7 @@ const completeProfile = asyncHandler(async (req, res) => {
   const checkContact = await User.findOne({ contact: req.body.contact });
   if (checkContact) {
     res.status(400);
-    throw new Error("contact already exist.");
+    throw new Error("Phone Number already exist.");
   }
 
   const salt = bcrypt.genSaltSync(10);
