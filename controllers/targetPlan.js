@@ -494,6 +494,36 @@ const calcIntrest = async (req, res) => {
   });
 };
 
+const activatePlanAPI = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await TargetPlan.findOne({ userID: id });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  const plan = await TargetPlan.findOneAndUpdate(
+    { userID: id },
+    { $set: { activatePlan: true } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Plan has been activated `,
+    plan,
+  });
+});
+
 module.exports = {
   createTP,
   targetPlanName,
@@ -505,5 +535,5 @@ module.exports = {
   getTargetPlanAccount,
   setSavingPeriod,
   calcIntrest,
-  // activatePlanAPI,
+  activatePlanAPI,
 };

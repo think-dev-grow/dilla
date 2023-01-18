@@ -12,6 +12,7 @@ const {
   getTargetPlanAccount,
   setSavingPeriod,
   calcIntrest,
+  activatePlanAPI,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -35,5 +36,7 @@ router.get("/get-target-account", protect, getTargetPlanAccount);
 router.put("/saving-period", protect, setSavingPeriod);
 
 router.get("/calculate-intrest", protect, calcIntrest);
+
+router.get("/activate-plan", protect, activatePlanAPI);
 
 module.exports = router;
