@@ -494,6 +494,43 @@ const calcIntrest = async (req, res) => {
   });
 };
 
+const targetPlanStatus = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const { status } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await TargetPlan.findOne({ userID: id });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!status) {
+    res.status(400);
+    throw new Error("Please input the period you want to save.");
+  }
+
+  const plan = await TargetPlan.findOneAndUpdate(
+    { userID: id },
+    { $set: { targetStatus: status } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Target plan status has been set to ${status}`,
+    plan,
+  });
+});
+
 const activatePlanAPI = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
@@ -536,4 +573,5 @@ module.exports = {
   setSavingPeriod,
   calcIntrest,
   activatePlanAPI,
+  targetPlanStatus,
 };
