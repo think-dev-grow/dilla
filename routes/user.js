@@ -37,7 +37,7 @@ router.post("/id-front", protect, upload.single("image"), uploadIdFront);
 
 router.post("/id-back", protect, upload.single("image"), uploadIdBack);
 
-router.grt("/total-balance", protect, calculateTotalBalance);
+router.get("/total-balance", protect, calculateTotalBalance);
 
 router.post(
   "/utility-bill",
