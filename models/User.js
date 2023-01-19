@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
     idFrontStatus: { type: String, default: "" },
     idBackStatus: { type: String, default: "" },
     utilityBillStatus: { type: String, default: "" },
-    nextOfKin: { type: Object, default: {} },
+    nextOfKin: { type: Object },
     ipAddress: { type: String, default: "" },
     verified: { type: String, default: "activated" },
     kyc: { type: Object, default: {} },
