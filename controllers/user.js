@@ -398,6 +398,8 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
     "accountBalance"
   );
 
+  const flexPlan = await FlexPlan.findOne({ userID: id });
+
   allTargetBalance.map(({ accountBalance }) => {
     return array1.push(accountBalance);
   });
@@ -411,7 +413,7 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
 
   // console.log(sumWithInitial);
 
-  res.status(200).json(sumWithInitial);
+  res.status(200).json({ sumWithInitial, flex: flexPlan.accountBalance });
 });
 
 module.exports = {
