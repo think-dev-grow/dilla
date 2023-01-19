@@ -27,6 +27,8 @@ router.put("/next-of-kin", protect, nextOfKin);
 
 router.get("/generate-account", protect, generateAccount);
 
+router.get("/total-balance", protect, calculateTotalBalance);
+
 router.put("/change-password", protect, changePassword);
 
 router.put("/change-pin", protect, changePin);
@@ -36,8 +38,6 @@ router.put("/update-user", protect, updateUser);
 router.post("/id-front", protect, upload.single("image"), uploadIdFront);
 
 router.post("/id-back", protect, upload.single("image"), uploadIdBack);
-
-router.get("/total-balance", protect, calculateTotalBalance);
 
 router.post(
   "/utility-bill",
