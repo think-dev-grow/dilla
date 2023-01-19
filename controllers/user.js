@@ -426,7 +426,7 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
 
   const totalBalance = fb + tb;
 
-  res.status(200).json({ totalBalance });
+  res.status(200).json({ totalBalance, allTargetBalance });
 });
 
 module.exports = {
