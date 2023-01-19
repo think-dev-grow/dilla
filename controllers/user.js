@@ -396,7 +396,15 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
     "accountBalance"
   );
 
-  res.status(200).json(allTargetBalance);
+  // const initialValue = 0;
+  // const sumWithInitial = array1.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue,
+  //   initialValue
+  // );
+
+  // console.log(sumWithInitial);
+
+  res.status(200).json(allTargetBalance.accountBalance);
 });
 
 module.exports = {
