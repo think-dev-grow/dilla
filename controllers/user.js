@@ -385,6 +385,8 @@ const generateAccount = asyncHandler(async (req, res) => {
 const calculateTotalBalance = asyncHandler(async (req, res) => {
   const { id } = req.user;
 
+  let array1 = [];
+
   const user = await User.findById(id);
 
   if (!user) {
@@ -404,7 +406,11 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
 
   // console.log(sumWithInitial);
 
-  res.status(200).json(allTargetBalance.accountBalance);
+  const test = allTargetBalance.map(({ accountBalance }) => {
+    return array1.push(accountBalance);
+  });
+
+  res.status(200).json(test);
 });
 
 module.exports = {
