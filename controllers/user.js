@@ -410,7 +410,7 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
     return array1.push(accountBalance);
   });
 
-  res.status(200).json(test);
+  res.status(200).json(array1);
 });
 
 module.exports = {
