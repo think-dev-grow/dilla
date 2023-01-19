@@ -3,12 +3,8 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { fileSizeFormatter } = require("../utils/fileUpload");
 const cloudinary = require("cloudinary").v2;
-
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.CLOUD_KEY,
-//   api_secret: process.env.CLOUD_SECRET,
-// });
+const TargetPlan = require("../models/TargetPlan");
+const FlexPlan = require("../models/FlexPlan");
 
 cloudinary.config({
   cloud_name: "dyanzjijz",
@@ -386,6 +382,23 @@ const generateAccount = asyncHandler(async (req, res) => {
   }
 });
 
+const calculateTotalBalance = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not Found");
+  }
+
+  const allTargetBalance = await TargetPlan.find({ userID: id }).select(
+    "accountBalance"
+  );
+
+  res.status(200).json(allTargetBalance);
+});
+
 module.exports = {
   getUser,
   updateUser,
@@ -397,4 +410,5 @@ module.exports = {
   uploadIdBack,
   uploadUtilityBill,
   generateAccount,
+  calculateTotalBalance,
 };

@@ -12,6 +12,7 @@ const {
   changePin,
   updateUser,
   generateAccount,
+  calculateTotalBalance,
 } = require("../controllers/user");
 
 const protect = require("../middlewares/authMiddleware");
@@ -35,6 +36,8 @@ router.put("/update-user", protect, updateUser);
 router.post("/id-front", protect, upload.single("image"), uploadIdFront);
 
 router.post("/id-back", protect, upload.single("image"), uploadIdBack);
+
+router.grt("/total-balance", protect, calculateTotalBalance);
 
 router.post(
   "/utility-bill",
