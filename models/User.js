@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema(
     idBackStatus: { type: String, default: "" },
     utilityBillStatus: { type: String, default: "" },
     nextOfKin: { type: Object },
+    referral: { type: Object, default: "" },
     ipAddress: { type: String, default: "" },
     verified: { type: String, default: "activated" },
     kyc: { type: Object, default: {} },
