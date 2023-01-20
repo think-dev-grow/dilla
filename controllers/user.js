@@ -97,7 +97,7 @@ const changePassword = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    msg: `password change  successfully`,
+    msg: `Heey ${data.kodeHex}, password change was successfully`,
     data,
   });
 });
@@ -320,9 +320,79 @@ const changePin = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    msg: `your pin has been changed`,
+    msg: `hey ${data.kodeHex},your pin has been changed successfully`,
     data,
   });
+});
+
+//Change security question
+const changeSecurityQuestion = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const { oldAnswer, question, newAnswer } = req.body;
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  const checkAnswer = bcrypt.compareSync(
+    oldAnswer,
+    user.securityQusetion.answer
+  );
+
+  if (!checkAnswer) {
+    res.status(400);
+    throw new Error("incorrect answer ");
+  }
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(newAnswer, salt);
+
+  const sq = {
+    question: question,
+    answer: hash,
+  };
+
+  const data = await User.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { securityQusetion: sq } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Hey ${data.kodeHex}, your security question has been updated`,
+    data,
+  });
+});
+
+//update Phone Number
+const updateContact = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  const { newPhoneNumber } = req.body;
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const checkNumber = await User.findOne({ contact: newPhoneNumber });
+
+  if (checkNumber) {
+    res.status(401);
+    throw new Error("phone number already exist");
+  }
+
+  await User.findOneAndUpdate(
+    { _id: req.user.id },
+    { $set: { contact: newPhoneNumber } },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json({ success: true, msg: "Phone number has been changed successfully" });
 });
 
 const approveIdBack = asyncHandler(async (req, res, next) => {
@@ -441,4 +511,6 @@ module.exports = {
   uploadUtilityBill,
   generateAccount,
   calculateTotalBalance,
+  updateContact,
+  changeSecurityQuestion,
 };
