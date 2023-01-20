@@ -295,6 +295,8 @@ const addBVN = asyncHandler(async (req, res) => {
 
   const user = await User.findById(id);
 
+  const point = user.kycPoints + 25;
+
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
@@ -308,7 +310,7 @@ const addBVN = asyncHandler(async (req, res) => {
   await User.findOneAndUpdate(
     { _id: id },
     {
-      $set: { bvn: bvn, verified: "bvn" },
+      $set: { bvn: bvn, verified: "bvn", kycPoints: point },
     },
     { new: true }
   );
