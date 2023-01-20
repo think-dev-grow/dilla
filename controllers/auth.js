@@ -240,11 +240,10 @@ const completeProfile = asyncHandler(async (req, res) => {
     "z");
 
   const letter1 = letters[Math.floor(Math.random() * letters.length)];
-  const letter2 = letters[Math.floor(Math.random() * letters.length)];
 
   const test = `${check.firstname.slice(0, 3)}${
     Math.floor(Math.random() * 999) + 100
-  }${letter1}${letter2}`;
+  }${letter1}${check.lastname.slice(0, 1)}`;
 
   const data = await User.findOneAndUpdate(
     { _id: req.user.id },
