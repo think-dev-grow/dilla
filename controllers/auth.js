@@ -211,39 +211,9 @@ const completeProfile = asyncHandler(async (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
 
-  const letters =
-    ("a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z");
-
-  const letter = letters[Math.floor(Math.random() * letters.length)];
-
   const test = `${firstname.slice(0, 3).toLocaleUpperCase()}${
     Math.floor(Math.random() * 999) + 100
-  }${letter.toLocaleUpperCase()}${lastname.slice(0, 1).toLocaleUpperCase()}`;
+  }${kodeHex.toLocaleUpperCase()}${lastname.slice(0, 1).toLocaleUpperCase()}`;
 
   const data = await User.findOneAndUpdate(
     { _id: req.user.id },
