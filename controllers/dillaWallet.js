@@ -84,6 +84,15 @@ const topUp = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   if (!dw) {
     res.status(400);
     throw new Error(

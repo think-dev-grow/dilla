@@ -17,6 +17,15 @@ const createFP = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   //create an acct if there's none
   if (!flexAcct) {
     var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
@@ -74,6 +83,15 @@ const autoFlexPlanEarn = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   if (!flexAcct) {
     res.status(400);
     throw new Error("You can't perform this action");
@@ -116,6 +134,15 @@ const autoFlexPlanExp = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!fpData) {
@@ -177,6 +204,15 @@ const customFlexPlanSavingTarget = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!userAcct) {
@@ -547,6 +583,15 @@ const topUp = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   if (!flexPlan) {
     res.status(400);
     throw new Error("You can't perform this action");
@@ -606,6 +651,15 @@ const flexToDilla = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!flexPlan) {

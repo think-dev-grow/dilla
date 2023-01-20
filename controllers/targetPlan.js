@@ -14,6 +14,15 @@ const createTP = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   var digits = Math.floor(Math.random() * 9000000000) + 1000000000;
 
   const data = new TargetPlan({
@@ -40,6 +49,15 @@ const targetPlanName = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!name) {
@@ -75,6 +93,15 @@ const autoTargetPlanEarn = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!targetAcct) {
@@ -119,6 +146,15 @@ const autoTargetPlanExp = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!tpData) {
@@ -179,6 +215,15 @@ const customTargetPlanSavingTarget = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   if (!userAcct) {
     res.status(400);
     throw new Error("You can't perform this action");
@@ -216,6 +261,15 @@ const customTargetPlanSavingRate = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
   if (!userAcct) {
     res.status(400);
     throw new Error("You can't perform this action");
@@ -251,6 +305,15 @@ const customTargetPlanDuration = asyncHandler(async (req, res) => {
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus == "" ||
+    user.idBackStatus === "" ||
+    user.utilityBillStatus === ""
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
   }
 
   if (!userAcct) {
