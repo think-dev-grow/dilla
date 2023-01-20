@@ -79,6 +79,12 @@ const changePassword = asyncHandler(async (req, res) => {
     throw new Error("Please add old and new password");
   }
 
+  //check password
+  if (password.length < 6) {
+    res.status(400);
+    throw new Error("Password must be up to 6 characters");
+  }
+
   const validPassword = await bcrypt.compare(oldPassword, user.password);
 
   if (!validPassword) {
