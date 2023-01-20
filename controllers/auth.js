@@ -213,7 +213,9 @@ const completeProfile = asyncHandler(async (req, res) => {
 
   const test = `${firstname.slice(0, 3).toLocaleUpperCase()}${
     Math.floor(Math.random() * 999) + 100
-  }${kodeHex.toLocaleUpperCase()}${lastname.slice(0, 1).toLocaleUpperCase()}`;
+  }${kodeHex.slice(0, 1).toLocaleUpperCase()}${lastname
+    .slice(0, 1)
+    .toLocaleUpperCase()}`;
 
   const data = await User.findOneAndUpdate(
     { _id: req.user.id },
