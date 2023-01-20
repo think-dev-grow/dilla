@@ -269,6 +269,7 @@ const completeProfile = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     msg: `Hey ${data.kodeHex},Registration completed.`,
+    test,
   });
 });
 
