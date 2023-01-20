@@ -13,6 +13,8 @@ const {
   updateUser,
   generateAccount,
   calculateTotalBalance,
+  updateContact,
+  changeSecurityQuestion,
 } = require("../controllers/user");
 
 const protect = require("../middlewares/authMiddleware");
@@ -32,6 +34,10 @@ router.get("/total-balance", protect, calculateTotalBalance);
 router.put("/change-password", protect, changePassword);
 
 router.put("/change-pin", protect, changePin);
+
+router.put("/change-contact", protect, updateContact);
+
+router.put("/change-security-question", protect, changeSecurityQuestion);
 
 router.put("/update-user", protect, updateUser);
 
