@@ -6,7 +6,7 @@ const randomize = require("randomatic");
 const generatedAccountNumberMail = require("../utils/email/generateAccount");
 
 const createSanAccount = asyncHandler(async (req, res) => {
-  const id = req.user.id;
+  const id = req.params.id;
 
   const sanAcct = await San.findOne({ userID: id });
 
