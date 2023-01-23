@@ -40,7 +40,7 @@ const createSanAccount = asyncHandler(async (req, res) => {
     await User.findOneAndUpdate(
       { _id: id },
       {
-        $set: { uid: digits },
+        $set: { uid: digits, kycPoints: user.kycPoints + 50 },
       },
       { new: true }
     );
