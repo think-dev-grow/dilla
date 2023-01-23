@@ -67,20 +67,20 @@ const updateUser = asyncHandler(async (req, res) => {
 const changePassword = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
-  const { oldPassword, password } = req.body;
+  const { oldPassword, newPassword } = req.body;
 
   if (!user) {
     res.status(400);
     throw new Error("User does not exist.");
   }
 
-  if (!oldPassword || !password) {
+  if (!oldPassword || !newPassword) {
     res.status(400);
     throw new Error("Please add old and new password");
   }
 
   //check password
-  if (password.length < 6) {
+  if (newPassword.length < 6) {
     res.status(400);
     throw new Error("Password must be up to 6 characters");
   }
@@ -93,7 +93,7 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   const salt = await bcrypt.genSalt(10);
-  const hash = bcrypt.hashSync(password, salt);
+  const hash = bcrypt.hashSync(newPassword, salt);
 
   const data = await User.findOneAndUpdate(
     { _id: req.params.id },
