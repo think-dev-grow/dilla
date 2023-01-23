@@ -93,10 +93,10 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   const salt = await bcrypt.genSalt(10);
-  const hash = bcrypt.hashSync(newPassword, salt);
+  const hash = await bcrypt.hash(newPassword, salt);
 
   const data = await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user.id },
     { $set: { password: hash } },
     { new: true }
   );
