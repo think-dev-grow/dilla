@@ -15,9 +15,9 @@ const createTP = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -52,9 +52,9 @@ const targetPlanName = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -96,9 +96,9 @@ const autoTargetPlanEarn = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -149,9 +149,9 @@ const autoTargetPlanExp = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -216,9 +216,9 @@ const customTargetPlanSavingTarget = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -262,9 +262,9 @@ const customTargetPlanSavingRate = asyncHandler(async (req, res) => {
   }
 
   if (
-    user.idBackStatus == "" ||
-    user.idBackStatus === "" ||
-    user.utilityBillStatus === ""
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -308,9 +308,9 @@ const customTargetPlanDuration = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
