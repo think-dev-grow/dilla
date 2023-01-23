@@ -18,9 +18,9 @@ const createFP = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -84,9 +84,9 @@ const autoFlexPlanEarn = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -137,9 +137,9 @@ const autoFlexPlanExp = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -207,9 +207,9 @@ const customFlexPlanSavingTarget = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
@@ -584,9 +584,9 @@ const topUp = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
