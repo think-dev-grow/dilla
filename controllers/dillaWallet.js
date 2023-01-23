@@ -85,9 +85,9 @@ const topUp = asyncHandler(async (req, res) => {
   }
 
   if (
-    !user.idBackStatus == "approved" ||
-    !user.idBackStatus === "approved" ||
-    !user.utilityBillStatus === "approved"
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
   ) {
     res.status(400);
     throw new Error("Please complete your Kyc first.");
