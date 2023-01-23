@@ -47,6 +47,8 @@ const UserSchema = new mongoose.Schema(
     transactionPin: { type: String, default: "", trim: true },
     mobilePinId: { type: String, default: "" },
     emailOTP: { type: String, default: "" },
+    halaal: { type: Boolean, default: false },
+    visibility: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
