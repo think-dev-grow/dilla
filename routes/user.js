@@ -37,7 +37,7 @@ router.put("/change-password", protect, changePassword);
 
 router.get("/set-halaal", protect, setHaal);
 
-router.put("/set-visibility", protect, setVisibility);
+router.get("/set-visibility", protect, setVisibility);
 
 router.put("/change-pin", protect, changePin);
 
