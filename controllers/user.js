@@ -505,6 +505,48 @@ const calculateTotalBalance = asyncHandler(async (req, res) => {
   res.status(200).json({ totalBalance, allTargetBalance, tb });
 });
 
+const setHaal = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist");
+  }
+
+  if (user.halaal === true) {
+    user.halaal = false;
+  } else {
+    user.halaal = true;
+  }
+
+  await user.save();
+
+  res.status(200).json({ msg: "Profile update successfully", success: true });
+});
+
+const setVisibility = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist");
+  }
+
+  if (user.visibility === true) {
+    user.visibility = false;
+  } else {
+    user.visibility = true;
+  }
+
+  await user.save();
+
+  res.status(200).json({ msg: "Profile update successfully", success: true });
+});
+
 module.exports = {
   getUser,
   updateUser,
@@ -519,4 +561,6 @@ module.exports = {
   calculateTotalBalance,
   updateContact,
   changeSecurityQuestion,
+  setHaal,
+  setVisibility,
 };
