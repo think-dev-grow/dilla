@@ -57,7 +57,7 @@ const generatedAccountNumberMail = (to, value, name) => {
                       
 
                         <p style="font-size: 16px;font-weight: 500;font-family: 'ubuntu',sans-serif;text-align: center;color:#4B5563; margin-top: 41px;">
-                        Please use the OTP code below to complete your account setup.
+                       Thank you ${name}, for making us your preferred Bank, Your account number is
                       </p>
 
                       <h3 style="font-size: 30px; font-weight: 600; margin: 0; line-height: 22px; color:#383636;">${value}</h3>
