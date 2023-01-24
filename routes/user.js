@@ -15,6 +15,8 @@ const {
   calculateTotalBalance,
   updateContact,
   changeSecurityQuestion,
+  setHaal,
+  setVisibility,
 } = require("../controllers/user");
 
 const protect = require("../middlewares/authMiddleware");
@@ -32,6 +34,10 @@ router.get("/generate-account", protect, generateAccount);
 router.get("/total-balance", protect, calculateTotalBalance);
 
 router.put("/change-password", protect, changePassword);
+
+router.put("/set-halaal", protect, setHaal);
+
+router.put("/set-visibility", protect, setVisibility);
 
 router.put("/change-pin", protect, changePin);
 
