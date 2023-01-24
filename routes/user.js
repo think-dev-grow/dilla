@@ -35,7 +35,7 @@ router.get("/total-balance", protect, calculateTotalBalance);
 
 router.put("/change-password", protect, changePassword);
 
-router.put("/set-halaal", protect, setHaal);
+router.get("/set-halaal", protect, setHaal);
 
 router.put("/set-visibility", protect, setVisibility);
 
