@@ -719,6 +719,7 @@ const flexToDilla = asyncHandler(async (req, res) => {
 
   const flexTransactionHistory = new Transaction({
     userId: id,
+    accountNumber: dillaWallet.accountNumber,
     transactionAmount: amount,
     transactionPlatform: "Flex",
     transactionType: "Withdraw",
@@ -748,6 +749,7 @@ const flexToDilla = asyncHandler(async (req, res) => {
 
   const dillaTransactionHistory = new Transaction({
     userId: id,
+    accountNumber: flexPlan.accountNumber,
     transactionAmount: amount,
     transactionPlatform: "Dilla",
     transactionType: "Top Up",
@@ -852,6 +854,7 @@ const flexToSAN = asyncHandler(async (req, res) => {
 
   const flexTransactionHistory = new Transaction({
     userId: id,
+    accountNumber: sanAccount.accountNumber,
     transactionAmount: amount,
     transactionPlatform: "Flex",
     transactionType: "Withdraw",
@@ -881,6 +884,7 @@ const flexToSAN = asyncHandler(async (req, res) => {
 
   const sanTransactionHistory = new Transaction({
     userId: id,
+    accountNumber: flexPlan.accountNumber,
     transactionAmount: amount,
     transactionPlatform: "San",
     transactionType: "Top Up",
