@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const TransactionSchema = new mongoose.Schema(
   {
     userId: { type: String },
+    name: { type: String },
     transactionPlatform: { type: String },
     transactionAmount: { type: Number },
     transactionDate: { type: String },
