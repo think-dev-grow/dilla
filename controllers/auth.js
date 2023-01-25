@@ -510,7 +510,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
   try {
     await resetMail(user.email, user.firstname, user.kodeHex, link);
-    res.status(200).json({ success: true, msg: "Reset email sent." });
+    res.status(200).json({ success: true, msg: "Reset email sent" });
   } catch (error) {
     res.status(500);
     throw new Error("Email not sent , please try again");
