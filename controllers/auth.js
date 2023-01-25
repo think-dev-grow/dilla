@@ -53,12 +53,21 @@ const sendOTP = asyncHandler(async (req, res) => {
       secure: true,
     });
 
-    //Send Mail
-    sendVerificationMail(user.email, otp);
-
     if (user) {
-      const verified = user.verified;
-      res.status(201).json({ success: true, otp, verified, msg: "13" });
+      try {
+        //Send Mail
+
+        await sendVerificationMail(user.email, otp);
+
+        res.status(201).json({
+          success: true,
+          otp,
+          msg: "Email verification OTP sent",
+        });
+      } catch (error) {
+        res.status(500);
+        throw new Error("Email was not sent");
+      }
     } else {
       res.status(400);
       throw new Error("Invalid user data");
@@ -88,14 +97,21 @@ const sendOTP = asyncHandler(async (req, res) => {
       secure: true,
     });
 
-    //Send Mail
-    sendVerificationMail(user.email, otp);
-
     if (user) {
-      const verified = user.verified;
-      res
-        .status(201)
-        .json({ success: true, otp, verified, msg: "Token resent" });
+      try {
+        //Send Mail
+
+        await sendVerificationMail(user.email, otp);
+
+        res.status(201).json({
+          success: true,
+          otp,
+          msg: "Email verification OTP sent",
+        });
+      } catch (error) {
+        res.status(500);
+        throw new Error("Email was not sent");
+      }
     } else {
       res.status(400);
       throw new Error("Invalid user data");
@@ -235,15 +251,20 @@ const completeProfile = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  sendCompleteProfile(data.email, data.kodeHex);
-  ceoMail(data.email, data.kodeHex);
-  supportMail(data.email, data.kodeHex);
+  try {
+    await sendCompleteProfile(data.email, data.kodeHex);
+    await ceoMail(data.email, data.kodeHex);
+    await supportMail(data.email, data.kodeHex);
 
-  res.status(200).json({
-    success: true,
-    msg: `Hey ${data.kodeHex},Registration completed.`,
-    test,
-  });
+    res.status(200).json({
+      success: true,
+      msg: `Hey ${data.kodeHex},Registration completed.`,
+      test,
+    });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Email not sent , please try again");
+  }
 });
 
 //Security Question API
