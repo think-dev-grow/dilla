@@ -397,6 +397,43 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
   });
 });
 
+const setType = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const { type } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await TargetPlan.findOne({ userID: id });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!type) {
+    res.status(400);
+    throw new Error("Please select your prefferd dream type.");
+  }
+
+  const plan = await TargetPlan.findOneAndUpdate(
+    { userID: id },
+    { $set: { dreamType: type } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Great choice ${user.kodeHex} `,
+    plan,
+  });
+});
+
 const calcIntrest = async (req, res) => {
   const id = req.user.id;
 
@@ -637,4 +674,5 @@ module.exports = {
   calcIntrest,
   activatePlanAPI,
   targetPlanStatus,
+  setType,
 };
