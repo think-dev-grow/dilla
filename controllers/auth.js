@@ -11,6 +11,7 @@ const sendVerificationMail = require("../utils/email/sendOTP");
 const sendCompleteProfile = require("../utils/email/sendCompleteProfile");
 const ceoMail = require("../utils/email/ceoMail");
 const supportMail = require("../utils/email/supportMail");
+const resetMail = require("../utils/email/forgotPassword");
 
 //Generate Token
 const generateToken = (id) => {
@@ -497,9 +498,17 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }).save();
 
   //Create url link
-  const link = process.env.Fro;
+  // https://ardilla-web.netlify.app/set-password/${resetToken}
+  // const link = `${process.env.FRONTEND_URL}/set-password/${resetToken}`;
+  const link = `https://ardilla-web.netlify.app/set-password/${resetToken}`;
 
-  res.send("Forgot password");
+  try {
+    await resetMail(user.email, user.firstname, user.kodeHex, link);
+    res.status(200).json({ success: true, msg: "Reset email sent." });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Email not sent , please try again");
+  }
 });
 
 //Reset Password
