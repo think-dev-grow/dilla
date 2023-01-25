@@ -543,7 +543,9 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   //Find User
   const user = await User.findOne({ _id: userToken.userId });
-  user.password = password;
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  user.password = hash;
   await user.save();
 
   res.status(200).json({
