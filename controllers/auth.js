@@ -480,6 +480,12 @@ const forgotPassword = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
+  let token = await Token.findOne({ userId: user._id });
+
+  if (token) {
+    await token.deleteOne();
+  }
+
   //Create reset token
   let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
 
