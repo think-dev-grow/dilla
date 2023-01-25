@@ -25,6 +25,7 @@ const TargetSchema = new mongoose.Schema(
     paymentDate: { type: String },
     activatePlan: { type: Boolean, default: false },
     targetStatus: { type: String },
+    dreamType: { type: String },
   },
   { timestamps: true }
 );
