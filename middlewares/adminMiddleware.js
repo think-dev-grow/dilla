@@ -20,10 +20,12 @@ const admin = asyncHandler(async (req, res, next) => {
 
     const { isAdmin } = user;
 
-    if (!isAdmin) {
-      res.status(401);
-      throw new Error("Not authorized,You can't carry out this operation.");
-    }
+    res.send(user);
+
+    // if (!isAdmin) {
+    //   res.status(401);
+    //   throw new Error("Not authorized,You can't carry out this operation.");
+    // }
   } catch (error) {
     res.status(401);
     throw new Error("Not authorized, please login");
