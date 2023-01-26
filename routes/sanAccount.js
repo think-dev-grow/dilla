@@ -1,19 +1,27 @@
 const express = require("express");
 
+//For user
 const {
-  createSanAccount,
   getSanAccount,
   getSanTransactionHistory,
 } = require("../controllers/sanAccount");
 
-const router = express.Router();
+//For Admin
+const { createSanAccount } = require("../controllers/admin");
 
+//user
 const protect = require("../middlewares/authMiddleware");
 
-router.get("/create-account/:id", createSanAccount);
+const isAdmin = require("../middlewares/adminMiddleware");
 
+const router = express.Router();
+
+//user
 router.get("/get-san-account", protect, getSanAccount);
 
 router.get("/san-history", protect, getSanTransactionHistory);
+
+// admin
+router.get("/create-account", isAdmin);
 
 module.exports = router;
