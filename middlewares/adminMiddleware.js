@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
-const isAdmin = asyncHandler(async (req, res, next) => {
+const admin = asyncHandler(async (req, res, next) => {
   try {
     const token = req.cookies.token;
 
@@ -14,16 +14,17 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     //Verify Token
     const verified = jwt.verify(token, process.env.JWT);
 
-    res.send(verified);
+    const id = verified.id;
 
-    // const id = verified.
+    const user = await User.findById(id);
 
-    // req.user = verified;
-    // next();
+    const { _id, kodeHex, isAdmin } = user;
+
+    res.status(200).json({ user, kodeHex, isAdmin });
   } catch (error) {
     res.status(401);
     throw new Error("Not authorized, please login");
   }
 });
 
-module.exports = isAdmin;
+module.exports = admin;
