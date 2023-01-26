@@ -1,15 +1,12 @@
 const express = require("express");
 
-//For user
 const {
   getSanAccount,
   getSanTransactionHistory,
 } = require("../controllers/sanAccount");
 
-//For Admin
 const { createSanAccount } = require("../controllers/admin");
 
-//user
 const protect = require("../middlewares/authMiddleware");
 
 const isAdmin = require("../middlewares/adminMiddleware");
