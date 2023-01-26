@@ -2,6 +2,7 @@ const TargetPlan = require("../models/TargetPlan");
 var abbreviate = require("number-abbreviate");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const Transaction = require("../models/Transaction");
 // const randomize = require("randomatic");
 
 const createTP = asyncHandler(async (req, res) => {
@@ -659,6 +660,81 @@ const activatePlanAPI = asyncHandler(async (req, res) => {
     msg: `Plan has been activated `,
     plan,
   });
+});
+
+const topUp = asyncHandler(async (req, res) => {
+  const { amount, reference } = req.body;
+  const id = req.user.id;
+
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+  const hour = new Date().getHours() + 1;
+  const minute = new Date().getMinutes();
+
+  const check = minute <= 9 ? `0${minute}` : minute;
+
+  const user = await User.findById(req.user.id);
+
+  const targetPlan = await TargetPlan.findOne({
+    userID: id,
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
+  if (!targetPlan) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!amount) {
+    res.status(400);
+    throw new Error("Please input the amount you want to save.");
+  }
+
+  const date = `${day}-${month}-${year}  `;
+  const time = `${hour}:${check}`;
+
+  const transaction = new Transaction({
+    userId: id,
+    transactionPlatform: "Target",
+    transactionAmount: amount,
+    transactionType: "Top Up",
+    transactionDate: date,
+    transactionTime: time,
+    // transactionDestination: "flex",
+    // transactionOrigin: "flex",
+    transactionReciept: reference,
+  });
+
+  const data = await transaction.save();
+
+  const topUp = await TargetPlan.findOneAndUpdate(
+    { userID: id },
+    {
+      $set: {
+        accountBalance: targetPlan.accountBalance + amount,
+      },
+    },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
 module.exports = {
