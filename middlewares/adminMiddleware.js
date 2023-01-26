@@ -20,7 +20,7 @@ const admin = asyncHandler(async (req, res, next) => {
 
     const { isAdmin } = user;
 
-    res.send(user);
+    res.send(isAdmin);
 
     // if (!isAdmin) {
     //   res.status(401);
