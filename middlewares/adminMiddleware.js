@@ -18,9 +18,9 @@ const admin = asyncHandler(async (req, res, next) => {
 
     const user = await User.findById(id);
 
-    const { _id, kodeHex, isAdmin } = user;
+    const { isAdmin } = user;
 
-    res.status(200).json({ user, kodeHex, isAdmin });
+    res.status(200).json({ isAdmin });
   } catch (error) {
     res.status(401);
     throw new Error("Not authorized, please login");
