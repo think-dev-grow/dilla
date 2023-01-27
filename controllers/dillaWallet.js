@@ -2,6 +2,7 @@ const DillaWallet = require("../models/DillaWallet");
 const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 const FlexPlan = require("../models/FlexPlan");
+const TargetPlan = require("../models/TargetPlan");
 const asyncHandler = require("express-async-handler");
 
 const createDillaWallet = asyncHandler(async (req, res) => {
@@ -261,6 +262,112 @@ const dillaToDIB = asyncHandler(async (req, res) => {
   });
 });
 
+const dillaToTarget = asyncHandler(async (req, res) => {
+  const { amount } = req.body;
+  const id = req.user.id;
+
+  const user = await User.findById(id);
+
+  const targetPlan = await TargetPlan.findOne({
+    userID: id,
+  });
+
+  const dw = await DillaWallet.findOne({
+    userID: id,
+  });
+
+  if (
+    user.idBackStatus !== "approved" ||
+    user.idBackStatus !== "approved" ||
+    user.utilityBillStatus !== "approved"
+  ) {
+    res.status(400);
+    throw new Error("Please complete your Kyc first.");
+  }
+
+  if (!targetPlan) {
+    res.status(400);
+    throw new Error(
+      "You can't perform this action, because you do not have a target plan"
+    );
+  }
+
+  if (!dw) {
+    res.status(400);
+    throw new Error(
+      "Unable to perform this action, because you do not have a dilla wallet"
+    );
+  }
+
+  if (amount > dw.accountBalance) {
+    res.status(404);
+    throw new Error("Insufficient Funds");
+  }
+
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+  const hour = new Date().getHours() + 1;
+  const minute = new Date().getMinutes();
+
+  const check = minute <= 9 ? `0${minute}` : minute;
+
+  const date = `${day}-${month}-${year}  `;
+  const time = `${hour}:${check}`;
+
+  //Debit Dilla-Wallet Account
+  await DillaWallet.findOneAndUpdate(
+    { userID: id },
+    {
+      $set: {
+        accountBalance: dw.accountBalance - amount,
+      },
+    },
+    { new: true }
+  );
+
+  const dwTransactionHistory = new Transaction({
+    userId: id,
+    accountNumber: dw.accountNumber,
+    name: user.kodeHex,
+    transactionAmount: amount,
+    transactionPlatform: "Dilla",
+    transactionType: "Withdraw",
+    transactionDate: date,
+    transactionTime: time,
+  });
+
+  const dwReciept = await dwTransactionHistory.save();
+
+  //Credit Target
+  await TargetPlan.findOneAndUpdate(
+    { userID: id },
+    { $set: { accountBalance: targetPlan.accountBalance + amount } },
+    { new: true }
+  );
+
+  const targetTransactionHistory = new Transaction({
+    userId: id,
+    name: user.kodeHex,
+    accountNumber: targetPlan.accountNumber,
+    transactionAmount: amount,
+    transactionPlatform: "Target",
+    transactionType: "Top Up",
+    transactionDate: date,
+    transactionTime: time,
+  });
+
+  const targetReciept = await targetTransactionHistory.save();
+
+  res.status(200).json({
+    msg: "Transfer to your target from dilla-wallet was successful",
+    targetReciept,
+    dwReciept,
+    success: true,
+  });
+});
+
 module.exports = {
   createDillaWallet,
   topUp,
@@ -270,4 +377,5 @@ module.exports = {
   // transferToMySan,
   // requestMoney,
   dillaToDIB,
+  dillaToTarget,
 };

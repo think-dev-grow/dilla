@@ -7,6 +7,7 @@ const {
   //   transferMoneyToDilla,
   getDillaWallet,
   getDillaTransactionHistory,
+  dillaToTarget,
   //   transferToMySan,
   //   requestMoney,
 } = require("../controllers/dillaWallet");
@@ -20,6 +21,8 @@ router.get("/create-account", protect, createDillaWallet);
 router.put("/top-up-account", protect, topUp);
 
 router.put("/dilla-to-dib", protect, dillaToDIB);
+
+router.put("/dilla-to-dream", protect, dillaToTarget);
 
 router.get("/dilla-history", protect, getDillaTransactionHistory);
 
