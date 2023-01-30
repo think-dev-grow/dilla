@@ -751,4 +751,5 @@ module.exports = {
   activatePlanAPI,
   targetPlanStatus,
   setType,
+  topUp,
 };

@@ -14,7 +14,7 @@ const {
   calcIntrest,
   activatePlanAPI,
   targetPlanStatus,
-  s,
+  topUp,
   setType,
 } = require("../controllers/targetPlan");
 
@@ -45,5 +45,7 @@ router.put("/set-status", protect, targetPlanStatus);
 router.get("/calculate-intrest", protect, calcIntrest);
 
 router.get("/activate-plan", protect, activatePlanAPI);
+
+router.put("/target-top-up", protect, topUp);
 
 module.exports = router;
