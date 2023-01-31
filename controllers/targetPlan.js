@@ -747,14 +747,14 @@ const getTargetTransactionHistory = asyncHandler(async (req, res) => {
     throw new Error("User does not exist.");
   }
 
-  const transactionHistory = await Transaction.deleteMany({
+  const transactionHistory = await Transaction.find({
     userId: id,
     transactionPlatform: "Target",
   }).sort({
     _id: -1,
   });
 
-  res.status(200).json({ msg: "deleted", transactionHistory });
+  res.status(200).json({ msg: "done", transactionHistory });
 });
 
 module.exports = {
