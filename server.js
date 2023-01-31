@@ -36,7 +36,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/flex", flexPlanRoutes);
 app.use("/api/target", targetPlanRoutes);
 app.use("/api/dilla-wallet", dillaWalletRoutes);
-app.use("/api/san", sanAccountRoutes);
++app.use("/api/san", sanAccountRoutes);
 app.use("/api/admin", adminRoutes);
 
 //Routes

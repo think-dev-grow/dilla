@@ -737,6 +737,26 @@ const topUp = asyncHandler(async (req, res) => {
     .json({ msg: "Top up successful", topUp, data, success: true, day });
 });
 
+const getTargetTransactionHistory = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  const transactionHistory = await Transaction.find({
+    userId: id,
+    transactionPlatform: "Target",
+  }).sort({
+    _id: -1,
+  });
+
+  res.status(200).json({ msg: "done", transactionHistory });
+});
+
 module.exports = {
   createTP,
   targetPlanName,
@@ -752,4 +772,5 @@ module.exports = {
   targetPlanStatus,
   setType,
   topUp,
+  getTargetTransactionHistory,
 };
