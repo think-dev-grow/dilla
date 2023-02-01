@@ -346,7 +346,7 @@ const getTargetPlanAccount = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   //this will be modified to find base on the target id
-  const targetPlan = await TargetPlan.find({ userID: id });
+  const targetPlan = await TargetPlan.findOne({ userID: id });
 
   if (!user) {
     res.status(400);
