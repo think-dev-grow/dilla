@@ -24,17 +24,17 @@ const protect = require("../middlewares/authMiddleware");
 
 router.get("/create-account", protect, createTP);
 
-router.put("/Target-plan-name", protect, targetPlanName);
+router.put("/Target-plan-name/:id", protect, targetPlanName);
 
-router.put("/set-earning", protect, autoTargetPlanEarn);
+router.put("/set-earning/:id", protect, autoTargetPlanEarn);
 
-router.put("/set-expenditure", protect, autoTargetPlanExp);
+router.put("/set-expenditure/:id", protect, autoTargetPlanExp);
 
-router.put("/custom-saving-target", protect, customTargetPlanSavingTarget);
+router.put("/custom-saving-target/:id", protect, customTargetPlanSavingTarget);
 
-router.put("/custom-saving-rate", protect, customTargetPlanSavingRate);
+router.put("/custom-saving-rate/:id", protect, customTargetPlanSavingRate);
 
-router.put("/custom-duration", protect, customTargetPlanDuration);
+router.put("/custom-duration/:id", protect, customTargetPlanDuration);
 
 router.get("/get-target-account", protect, getTargetPlanAccount);
 
