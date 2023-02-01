@@ -36,7 +36,7 @@ router.put("/custom-saving-rate/:id", protect, customTargetPlanSavingRate);
 
 router.put("/custom-duration/:id", protect, customTargetPlanDuration);
 
-router.get("/get-target-account", protect, getTargetPlanAccount);
+router.get("/get-target-account/:id", protect, getTargetPlanAccount);
 
 router.get("/get-target-plans", protect, getTargetPlans);
 
@@ -46,7 +46,7 @@ router.put("/set-type", protect, setType);
 
 router.put("/set-status", protect, targetPlanStatus);
 
-router.get("/calculate-intrest", protect, calcIntrest);
+router.get("/calculate-intrest/:id", protect, calcIntrest);
 
 router.get("/activate-plan", protect, activatePlanAPI);
 

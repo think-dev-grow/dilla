@@ -351,10 +351,12 @@ const customTargetPlanDuration = asyncHandler(async (req, res) => {
 const getTargetPlanAccount = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const user = await User.findById(req.user.id);
 
   //this will be modified to find base on the target id
-  const targetPlan = await TargetPlan.findOne({ userID: id });
+  const targetPlan = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -467,11 +469,13 @@ const setType = asyncHandler(async (req, res) => {
 const calcIntrest = async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   let value;
 
   const user = await User.findById(req.user.id);
 
-  const targetAcct = await TargetPlan.findOne({ userID: id });
+  const targetAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -603,7 +607,7 @@ const calcIntrest = async (req, res) => {
   }, 0);
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     {
       $set: {
         totalIntrest: runSum,
