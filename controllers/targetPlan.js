@@ -42,6 +42,7 @@ const createTP = asyncHandler(async (req, res) => {
 
 const targetPlanName = asyncHandler(async (req, res) => {
   const id = req.user.id;
+  const targetId = req.params.id;
 
   const { name } = req.body;
 
@@ -67,7 +68,7 @@ const targetPlanName = asyncHandler(async (req, res) => {
   }
 
   const targetPlan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     {
       $set: {
         name: name,
@@ -85,11 +86,12 @@ const targetPlanName = asyncHandler(async (req, res) => {
 
 const autoTargetPlanEarn = asyncHandler(async (req, res) => {
   const id = req.user.id;
+  const targetId = req.params.id;
   const { ern } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const targetAcct = await TargetPlan.findOne({ userID: id });
+  const targetAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -137,12 +139,13 @@ const autoTargetPlanEarn = asyncHandler(async (req, res) => {
 
 const autoTargetPlanExp = asyncHandler(async (req, res) => {
   const id = req.user.id;
+  const targetId = req.params.id;
 
   const { value } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const tpData = await TargetPlan.findOne({ userID: id });
+  const tpData = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -204,12 +207,13 @@ const autoTargetPlanExp = asyncHandler(async (req, res) => {
 
 const customTargetPlanSavingTarget = asyncHandler(async (req, res) => {
   const id = req.user.id;
+  const targetId = req.params.id;
 
   const { savingTarget } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -251,11 +255,13 @@ const customTargetPlanSavingTarget = asyncHandler(async (req, res) => {
 const customTargetPlanSavingRate = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const { savingRate } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -297,11 +303,13 @@ const customTargetPlanSavingRate = asyncHandler(async (req, res) => {
 const customTargetPlanDuration = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const { duration } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
