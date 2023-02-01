@@ -125,7 +125,7 @@ const autoTargetPlanEarn = asyncHandler(async (req, res) => {
   const cPsr = [ern * 0.4, ern * 0.6, ern * 0.8];
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { earn: ern, psr: psrange, cPsr } },
     { new: true }
   );
@@ -184,7 +184,7 @@ const autoTargetPlanExp = asyncHandler(async (req, res) => {
   // Cast (run check)
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     {
       $set: {
         exp: tpData.cPsr[index],
@@ -240,7 +240,7 @@ const customTargetPlanSavingTarget = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { customSavingTarget: savingTarget, type: "custom" } },
     { new: true }
   );
@@ -288,7 +288,7 @@ const customTargetPlanSavingRate = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { customSavingRate: savingRate } },
     { new: true }
   );
@@ -336,7 +336,7 @@ const customTargetPlanDuration = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { customDuration: duration } },
     { new: true }
   );
