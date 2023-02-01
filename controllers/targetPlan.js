@@ -361,6 +361,27 @@ const getTargetPlanAccount = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, targetPlan });
 });
 
+const getTargetPlans = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  //this will be modified to find base on the target id
+  const targetPlan = await TargetPlan.find({ userID: id });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!targetPlan) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  res.status(200).json({ success: true, targetPlan });
+});
+
 const setSavingPeriod = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
@@ -773,4 +794,5 @@ module.exports = {
   setType,
   topUp,
   getTargetTransactionHistory,
+  getTargetPlans,
 };

@@ -17,6 +17,7 @@ const {
   topUp,
   setType,
   getTargetTransactionHistory,
+  getTargetPlans,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -36,6 +37,8 @@ router.put("/custom-saving-rate", protect, customTargetPlanSavingRate);
 router.put("/custom-duration", protect, customTargetPlanDuration);
 
 router.get("/get-target-account", protect, getTargetPlanAccount);
+
+router.get("/get-target-plans", protect, getTargetPlans);
 
 router.put("/saving-period", protect, setSavingPeriod);
 
