@@ -798,6 +798,42 @@ const getTargetTransactionHistory = asyncHandler(async (req, res) => {
   res.status(200).json({ msg: "done", transactionHistory });
 });
 
+const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+
+  let array1 = [];
+
+  let tb;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not Found");
+  }
+
+  const allTargetBalance = await TargetPlan.find({ userID: id }).select(
+    "accountBalance"
+  );
+
+  // if (!allTargetBalance) {
+  //   tb = 0;
+  // } else {
+  //   allTargetBalance.map(({ accountBalance }) => {
+  //     return array1.push(accountBalance);
+  //   });
+
+  //   const initialValue = 0;
+
+  //   tb = array1.reduce(
+  //     (accumulator, currentValue) => accumulator + currentValue,
+  //     initialValue
+  //   );
+  // }
+
+  res.status(200).json({ allTargetBalance });
+});
+
 module.exports = {
   createTP,
   targetPlanName,
@@ -815,4 +851,5 @@ module.exports = {
   topUp,
   getTargetTransactionHistory,
   getTargetPlans,
+  calculateTotalTargetBalance,
 };
