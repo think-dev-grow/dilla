@@ -261,10 +261,12 @@ const dillaToTarget = asyncHandler(async (req, res) => {
   const { amount } = req.body;
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const user = await User.findById(id);
 
   const targetPlan = await TargetPlan.findOne({
-    userID: id,
+    _id: targetId,
   });
 
   const dw = await DillaWallet.findOne({
@@ -313,7 +315,7 @@ const dillaToTarget = asyncHandler(async (req, res) => {
 
   //Debit Dilla-Wallet Account
   await DillaWallet.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     {
       $set: {
         accountBalance: dw.accountBalance - amount,
