@@ -816,26 +816,18 @@ const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
     "accountBalance"
   );
 
-  const totalBalance = allTargetBalance.reduce(
-    (accumulator, currentValue) => accumulator + currentValue
+  allTargetBalance.map(({ accountBalance }) => {
+    return array1.push(accountBalance);
+  });
+
+  const initialValue = 0;
+
+  tb = array1.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialValue
   );
 
-  // if (!allTargetBalance) {
-  //   tb = 0;
-  // } else {
-  //   allTargetBalance.map(({ accountBalance }) => {
-  //     return array1.push(accountBalance);
-  //   });
-
-  //   const initialValue = 0;
-
-  //   tb = array1.reduce(
-  //     (accumulator, currentValue) => accumulator + currentValue,
-  //     initialValue
-  //   );
-  // }
-
-  res.status(200).json({ totalBalance });
+  res.status(200).json({ tb });
 });
 
 module.exports = {
