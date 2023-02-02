@@ -788,7 +788,7 @@ const getTargetTransactionHistory = asyncHandler(async (req, res) => {
     throw new Error("User does not exist");
   }
 
-  const transactionHistory = await Transaction.find({
+  const transactionHistory = await Transaction.deleteMany({
     userId: id,
     transactionPlatform: "Target",
   }).sort({
@@ -827,7 +827,7 @@ const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
     initialValue
   );
 
-  res.status(200).json({ tb, array1 , allTargetBalance });
+  res.status(200).json({ tb });
 });
 
 module.exports = {
