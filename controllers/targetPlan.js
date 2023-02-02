@@ -827,7 +827,7 @@ const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
     initialValue
   );
 
-  res.status(200).json({ tb, array1 });
+  res.status(200).json({ tb, array1 , allTargetBalance });
 });
 
 module.exports = {
