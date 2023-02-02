@@ -315,7 +315,7 @@ const dillaToTarget = asyncHandler(async (req, res) => {
 
   //Debit Dilla-Wallet Account
   await DillaWallet.findOneAndUpdate(
-    { _id: targetId },
+    { userID: id },
     {
       $set: {
         accountBalance: dw.accountBalance - amount,
@@ -339,7 +339,7 @@ const dillaToTarget = asyncHandler(async (req, res) => {
 
   //Credit Target
   await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { accountBalance: targetPlan.accountBalance + amount } },
     { new: true }
   );
