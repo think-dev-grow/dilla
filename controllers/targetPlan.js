@@ -817,8 +817,7 @@ const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
   );
 
   const totalBalance = allTargetBalance.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    initialValue
+    (accumulator, currentValue) => accumulator + currentValue
   );
 
   // if (!allTargetBalance) {
