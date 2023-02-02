@@ -49,6 +49,7 @@ const UserSchema = new mongoose.Schema(
     emailOTP: { type: String, default: "" },
     halaal: { type: Boolean, default: false },
     visibility: { type: Boolean, default: false },
+    badge: { type: String, default: "cadet" },
   },
   { timestamps: true }
 );
