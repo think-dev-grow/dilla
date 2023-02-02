@@ -394,12 +394,13 @@ const getTargetPlans = asyncHandler(async (req, res) => {
 
 const setSavingPeriod = asyncHandler(async (req, res) => {
   const id = req.user.id;
+  const targetId = req.params.id;
 
   const { period } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -417,7 +418,7 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { savingPeriod: period } },
     { new: true }
   );
@@ -432,11 +433,13 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
 const setType = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const { type } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -454,7 +457,7 @@ const setType = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { dreamType: type } },
     { new: true }
   );
@@ -631,11 +634,13 @@ const calcIntrest = async (req, res) => {
 const targetPlanStatus = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const { status } = req.body;
 
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -653,7 +658,7 @@ const targetPlanStatus = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { targetStatus: status } },
     { new: true }
   );
@@ -668,9 +673,11 @@ const targetPlanStatus = asyncHandler(async (req, res) => {
 const activatePlanAPI = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const user = await User.findById(req.user.id);
 
-  const userAcct = await TargetPlan.findOne({ userID: id });
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
 
   if (!user) {
     res.status(400);
@@ -683,7 +690,7 @@ const activatePlanAPI = asyncHandler(async (req, res) => {
   }
 
   const plan = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { activatePlan: true } },
     { new: true }
   );
@@ -698,6 +705,7 @@ const activatePlanAPI = asyncHandler(async (req, res) => {
 const topUp = asyncHandler(async (req, res) => {
   const { amount, reference } = req.body;
   const id = req.user.id;
+  const targetId = req.params.id;
 
   const day = new Date().getDate();
   const month = new Date().getMonth() + 1;
@@ -711,7 +719,7 @@ const topUp = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   const targetPlan = await TargetPlan.findOne({
-    userID: id,
+    _id: targetId,
   });
 
   if (!user) {
@@ -756,7 +764,7 @@ const topUp = asyncHandler(async (req, res) => {
   const data = await transaction.save();
 
   const topUp = await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     {
       $set: {
         accountBalance: targetPlan.accountBalance + amount,

@@ -40,17 +40,17 @@ router.get("/get-target-account/:id", protect, getTargetPlanAccount);
 
 router.get("/get-target-plans", protect, getTargetPlans);
 
-router.put("/saving-period", protect, setSavingPeriod);
+router.put("/saving-period/:id", protect, setSavingPeriod);
 
-router.put("/set-type", protect, setType);
+router.put("/set-type/:id", protect, setType);
 
-router.put("/set-status", protect, targetPlanStatus);
+router.put("/set-status/:id", protect, targetPlanStatus);
 
 router.get("/calculate-intrest/:id", protect, calcIntrest);
 
-router.get("/activate-plan", protect, activatePlanAPI);
+router.get("/activate-plan/:id", protect, activatePlanAPI);
 
-router.put("/target-top-up", protect, topUp);
+router.put("/target-top-up/:id", protect, topUp);
 
 router.get("/target-history", protect, getTargetTransactionHistory);
 
