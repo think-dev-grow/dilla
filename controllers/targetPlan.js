@@ -854,7 +854,7 @@ const extendTargetPlan = asyncHandler(async (req, res) => {
     );
   }
 
-  if (savingTarget || savingRate || period || password) {
+  if (!savingTarget || !savingRate || !period || !password) {
     res.status(400);
     throw new Error("Please fill form correctly.");
   }
