@@ -19,6 +19,7 @@ const {
   getTargetTransactionHistory,
   getTargetPlans,
   calculateTotalTargetBalance,
+  extendTargetPlan,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -52,6 +53,8 @@ router.get("/calculate-intrest/:id", protect, calcIntrest);
 router.get("/activate-plan/:id", protect, activatePlanAPI);
 
 router.put("/target-top-up/:id", protect, topUp);
+
+router.put("/extend-plan/:id", protect, extendTargetPlan);
 
 router.get("/target-history", protect, getTargetTransactionHistory);
 
