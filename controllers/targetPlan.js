@@ -3,6 +3,7 @@ var abbreviate = require("number-abbreviate");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const Transaction = require("../models/Transaction");
+const bcrypt = require("bcryptjs");
 // const randomize = require("randomatic");
 
 const createTP = asyncHandler(async (req, res) => {
@@ -830,6 +831,94 @@ const calculateTotalTargetBalance = asyncHandler(async (req, res) => {
   res.status(200).json({ tb });
 });
 
+const extendTargetPlan = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const targetId = req.params.id;
+
+  const { savingTarget, savingRate, period, password } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const targetAcct = await TargetPlan.findOne({ _id: targetId });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!targetAcct) {
+    res.status(400);
+    throw new Error(
+      "You can't perform this action, Target account don't exist"
+    );
+  }
+
+  if (savingTarget || savingRate || period || password) {
+    res.status(400);
+    throw new Error("Please fill form correctly.");
+  }
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    res.status(400);
+    throw new Error("Wrong credentials ");
+  }
+
+  if (targetAcct.type === "auto") {
+    if (
+      savingRate < targetAcct.autoSavingRate ||
+      savingTarget < targetAcct.autoSavingTarget
+    ) {
+      res.status(400);
+      throw new Error("");
+    } else {
+      await TargetPlan.findOneAndUpdate(
+        { _id: targetId },
+        {
+          $set: {
+            autoSavingRate: savingRate,
+            autoSavingTarget: savingTarget,
+            savingPeriod: period,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({
+        success: true,
+        msg: `Your target Plan has been extended successfully `,
+      });
+    }
+  } else {
+    if (
+      savingRate < targetAcct.customSavingRate ||
+      savingTarget < targetAcct.customSavingTarget
+    ) {
+      res.status(400);
+      throw new Error("");
+    } else {
+      await TargetPlan.findOneAndUpdate(
+        { _id: targetId },
+        {
+          $set: {
+            customSavingRate: savingRate,
+            customSavingTarget: savingTarget,
+            savingPeriod: period,
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({
+        success: true,
+        msg: `Your target Plan has been extended successfully `,
+      });
+    }
+  }
+});
+
 module.exports = {
   createTP,
   targetPlanName,
@@ -848,4 +937,5 @@ module.exports = {
   getTargetTransactionHistory,
   getTargetPlans,
   calculateTotalTargetBalance,
+  extendTargetPlan,
 };
