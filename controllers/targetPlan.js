@@ -923,6 +923,42 @@ const extendTargetPlan = asyncHandler(async (req, res) => {
   }
 });
 
+const updateTargetPlan = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const targetId = req.params.id;
+
+  const { name, source, password } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const targetAcct = await TargetPlan.findOne({ _id: targetId });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!targetAcct) {
+    res.status(400);
+    throw new Error(
+      "You can't perform this action, Target account don't exist"
+    );
+  }
+
+  if (!name || !savingRate || !period || !password) {
+    res.status(400);
+    throw new Error("Please fill form correctly.");
+  }
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    res.status(400);
+    throw new Error("Wrong credentials ");
+  }
+});
+
 module.exports = {
   createTP,
   targetPlanName,
