@@ -872,7 +872,9 @@ const extendTargetPlan = asyncHandler(async (req, res) => {
       savingTarget < targetAcct.autoSavingTarget
     ) {
       res.status(400);
-      throw new Error("");
+      throw new Error(
+        " Please check saving target and saving rate , and try again"
+      );
     } else {
       await TargetPlan.findOneAndUpdate(
         { _id: targetId },
@@ -897,7 +899,9 @@ const extendTargetPlan = asyncHandler(async (req, res) => {
       savingTarget < targetAcct.customSavingTarget
     ) {
       res.status(400);
-      throw new Error("");
+      throw new Error(
+        "Please check saving target and saving rate , and try again"
+      );
     } else {
       await TargetPlan.findOneAndUpdate(
         { _id: targetId },
