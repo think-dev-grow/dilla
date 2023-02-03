@@ -20,6 +20,6 @@ router.put("/san-to-dib", protect, sanToDIB);
 
 router.put("/san-top-up", protect, topUp);
 
-router.put("/san-to-dream", protect, sanToDream);
+router.put("/san-to-dream/:id", protect, sanToDream);
 
 module.exports = router;

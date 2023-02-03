@@ -150,10 +150,12 @@ const sanToDream = asyncHandler(async (req, res) => {
   const { amount } = req.body;
   const id = req.user.id;
 
+  const targetId = req.params.id;
+
   const user = await User.findById(id);
 
   const targetPlan = await TargetPlan.findOne({
-    userID: id,
+    _id: targetId,
   });
 
   const sanAccount = await San.findOne({
@@ -224,7 +226,7 @@ const sanToDream = asyncHandler(async (req, res) => {
 
   //Credit Target
   await TargetPlan.findOneAndUpdate(
-    { userID: id },
+    { _id: targetId },
     { $set: { accountBalance: targetPlan.accountBalance + amount } },
     { new: true }
   );
