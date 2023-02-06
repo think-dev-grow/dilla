@@ -185,10 +185,7 @@ const checkKodex = asyncHandler(async (req, res) => {
   const { kodeHex } = req.body;
 
   const checkUsername = await User.find({
-    $text: { $search: kodeHex },
-  }).projection({
-    _id: 0,
-    kodeHex: 1,
+    kodeHex: { $regex: kodeHex, $options: "i" },
   });
 
   if (checkUsername) {
@@ -196,7 +193,7 @@ const checkKodex = asyncHandler(async (req, res) => {
     throw new Error("KodeHex name is already taken.");
   }
 
-  res.status(200).json({ success: true, msg: "keep going" });
+  res.status(200).json({ success: true, msg: "keep going", checkUsername });
 });
 
 //Complete-profile API
