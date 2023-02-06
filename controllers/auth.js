@@ -184,7 +184,12 @@ const wrongEmail = asyncHandler(async (req, res) => {
 const checkKodex = asyncHandler(async (req, res) => {
   const { kodeHex } = req.body;
 
-  const checkUsername = await User.findOne({ kodeHex });
+  const checkUsername = await User.find({
+    $text: { $search: kodeHex },
+  }).projection({
+    _id: 0,
+    kodeHex: 1,
+  });
 
   if (checkUsername) {
     res.status(400);
