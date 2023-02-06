@@ -193,10 +193,10 @@ const completeProfile = asyncHandler(async (req, res) => {
   }
 
   //check  all fields
-  if (!kodeHex || !firstname || !lastname || !contact || !password) {
-    res.status(400);
-    throw new Error("Please fill out all the required fields");
-  }
+  // if (!kodeHex || !firstname || !lastname || !contact || !password) {
+  //   res.status(400);
+  //   throw new Error("Please fill out all the required fields");
+  // }
 
   //check password
   if (password.length < 6) {
@@ -656,8 +656,6 @@ const logOut = asyncHandler(async (req, res) => {
 
   res.status(200).json({ msg: "Logout succesfully", success: true });
 });
-
-//test
 
 module.exports = {
   sendOTP,

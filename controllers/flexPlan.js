@@ -928,6 +928,48 @@ const getFlexTransactionHistory = asyncHandler(async (req, res) => {
   res.status(200).json({ msg: "done", transactionHistory });
 });
 
+const subcription = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  const flexAcct = await FlexPlan.findOne({ userID: id });
+
+  const dillaWallet = await DillaWallet.findOne({
+    userID: id,
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!flexAcct) {
+    res.status(400);
+    throw new Error(
+      "You can't perform this action , DIB account doesn't exist"
+    );
+  }
+
+  if (!dillaWallet) {
+    res.status(400);
+    throw new Error(
+      "Unable to perform this action, because you do not have a dilla wallet"
+    );
+  }
+
+  if (flexAcct.autoSavingRate > dillaWallet.accountBalance) {
+    //send message here
+    res.status(400);
+    throw new Error("Insufficient Balance");
+  }
+
+  let now = new Date();
+  let targetDate = new Date("2023-02-06 12:00:00");
+
+  let interval = targetDate - now;
+});
+
 module.exports = {
   createFP,
   autoFlexPlanEarn,
@@ -943,4 +985,5 @@ module.exports = {
   getFlexTransactionHistory,
   flexToDilla,
   flexToSAN,
+  subcription,
 };

@@ -16,6 +16,7 @@ const {
   getFlexTransactionHistory,
   flexToDilla,
   flexToSAN,
+  subcription,
 } = require("../controllers/flexPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -47,5 +48,7 @@ router.put("/flex-to-dilla", protect, flexToDilla);
 router.put("/flex-to-san", protect, flexToSAN);
 
 router.get("/flex-history", protect, getFlexTransactionHistory);
+
+router.get("/sub", protect, subcription);
 
 module.exports = router;
