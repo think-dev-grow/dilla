@@ -185,10 +185,13 @@ const checkKodex = asyncHandler(async (req, res) => {
   const { kodeHex } = req.body;
 
   const checkUsername = await User.findOne({ kodeHex });
+
   if (checkUsername) {
     res.status(400);
     throw new Error("KodeHex name is already taken.");
   }
+
+  res.status(200).json({ success: true, msg: "keep going" });
 });
 
 //Complete-profile API
