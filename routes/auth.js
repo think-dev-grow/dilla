@@ -17,6 +17,7 @@ const {
   forgotPassword,
   resetPassword,
   getMobilePin,
+  checkKodex,
 } = require("../controllers/auth");
 const router = express.Router();
 
@@ -51,6 +52,8 @@ router.post("/login", Login);
 router.get("/logout", logOut);
 
 router.get("/login-status", loginStatus);
+
+router.get("/check-kodeHex", checkKodex);
 
 router.post("/forgot-password", forgotPassword);
 

@@ -181,6 +181,16 @@ const wrongEmail = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, msg: "Email deleted" });
 });
 
+const checkKodex = asyncHandler(async (req, res) => {
+  const { kodeHex } = req.body;
+
+  const checkUsername = await User.findOne({ kodeHex });
+  if (checkUsername) {
+    res.status(400);
+    throw new Error("KodeHex name is already taken.");
+  }
+});
+
 //Complete-profile API
 const completeProfile = asyncHandler(async (req, res) => {
   const { firstname, lastname, kodeHex, contact, password } = req.body;
@@ -675,4 +685,5 @@ module.exports = {
   Login,
   loginStatus,
   getMobilePin,
+  checkKodex,
 };
