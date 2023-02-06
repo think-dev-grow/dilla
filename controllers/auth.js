@@ -185,7 +185,7 @@ const checkKodex = asyncHandler(async (req, res) => {
   const { kodeHex } = req.body;
 
   const checkUsername = await User.find({
-    kodeHex: { $regex: kodeHex, $options: "i" },
+    kodeHex: { $regex: `${kodeHex}`, $options: "i" },
   });
 
   if (checkUsername) {
