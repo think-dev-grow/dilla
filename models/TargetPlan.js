@@ -26,6 +26,8 @@ const TargetSchema = new mongoose.Schema(
     activatePlan: { type: Boolean, default: false },
     targetStatus: { type: String },
     dreamType: { type: String },
+    displayType: { type: String, default: "" },
+    description: { type: String, default: "" },
   },
   { timestamps: true }
 );

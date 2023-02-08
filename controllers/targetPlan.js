@@ -959,6 +959,84 @@ const updateTargetPlan = asyncHandler(async (req, res) => {
   }
 });
 
+const setDisplayType = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const targetId = req.params.id;
+
+  const { type } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!type) {
+    res.status(400);
+    throw new Error("Please input the period you want to save.");
+  }
+
+  const plan = await TargetPlan.findOneAndUpdate(
+    { _id: targetId },
+    { $set: { displayType: type } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Target plan type has been set to ${type}`,
+    plan,
+  });
+});
+
+const setDescription = asyncHandler(async (req, flex) => {
+  const id = req.user.id;
+
+  const targetId = req.params.id;
+
+  const { description } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await TargetPlan.findOne({ _id: targetId });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!description) {
+    res.status(400);
+    throw new Error("Please input the period you want to save.");
+  }
+
+  const plan = await TargetPlan.findOneAndUpdate(
+    { _id: targetId },
+    { $set: { description: description } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Target plan type has been set to ${type}`,
+    plan,
+  });
+});
+
 module.exports = {
   createTP,
   targetPlanName,
@@ -978,4 +1056,6 @@ module.exports = {
   getTargetPlans,
   calculateTotalTargetBalance,
   extendTargetPlan,
+  setDisplayType,
+  setDescription,
 };

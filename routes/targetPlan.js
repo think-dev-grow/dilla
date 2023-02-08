@@ -20,6 +20,8 @@ const {
   getTargetPlans,
   calculateTotalTargetBalance,
   extendTargetPlan,
+  setDescription,
+  setDisplayType,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -55,6 +57,10 @@ router.get("/activate-plan/:id", protect, activatePlanAPI);
 router.put("/target-top-up/:id", protect, topUp);
 
 router.put("/extend-plan/:id", protect, extendTargetPlan);
+
+router.put("/desc/:id", protect, setDescription);
+
+router.put("/display-type/:id", protect, setDisplayType);
 
 router.get("/target-history", protect, getTargetTransactionHistory);
 
