@@ -998,7 +998,7 @@ const setDisplayType = asyncHandler(async (req, res) => {
   });
 });
 
-const setDescription = asyncHandler(async (req, flex) => {
+const setDescription = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
   const targetId = req.params.id;
@@ -1032,7 +1032,7 @@ const setDescription = asyncHandler(async (req, flex) => {
 
   res.status(200).json({
     success: true,
-    msg: `Target plan type has been set to ${type}`,
+    msg: `description has been set successfully`,
     plan,
   });
 });
