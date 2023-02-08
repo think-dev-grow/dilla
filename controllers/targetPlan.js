@@ -1019,11 +1019,6 @@ const setDescription = asyncHandler(async (req, res) => {
     throw new Error("You can't perform this action");
   }
 
-  if (!description) {
-    res.status(400);
-    throw new Error("Please input the period you want to save.");
-  }
-
   const plan = await TargetPlan.findOneAndUpdate(
     { _id: targetId },
     { $set: { description: description } },
