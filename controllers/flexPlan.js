@@ -991,7 +991,7 @@ const setDIB = asyncHandler(async (req, res) => {
     throw new Error("You can't perform this action");
   }
 
-  if (!source || password) {
+  if (!source || !password) {
     res.status(400);
     throw new Error("Please fill form correctly");
   }
