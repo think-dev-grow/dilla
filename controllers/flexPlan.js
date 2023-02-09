@@ -1009,7 +1009,7 @@ const setDIB = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    msg: `Great choice `,
+    msg: `Great choice , Setting completed`,
     plan,
   });
 });
