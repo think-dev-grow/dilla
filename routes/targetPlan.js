@@ -22,6 +22,7 @@ const {
   extendTargetPlan,
   setDescription,
   setDisplayType,
+  joinTarget,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -65,5 +66,7 @@ router.put("/display-type/:id", protect, setDisplayType);
 router.get("/target-history", protect, getTargetTransactionHistory);
 
 router.get("/target-total", protect, calculateTotalTargetBalance);
+
+router.get("/join/:id", joinTarget);
 
 module.exports = router;
