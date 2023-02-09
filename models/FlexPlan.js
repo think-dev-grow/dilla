@@ -26,6 +26,7 @@ const FlexSchema = new mongoose.Schema(
     paymentDate: { type: String },
     activatePlan: { type: Boolean, default: false },
     transcactionHistory: { type: Array, default: [] },
+    source: { type: String, default: "dilla" },
   },
   { timestamps: true }
 );

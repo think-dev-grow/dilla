@@ -970,6 +970,50 @@ const subcription = asyncHandler(async (req, res) => {
   let interval = targetDate - now;
 });
 
+const setDIB = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const { source, password } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  const userAcct = await FlexPlan.findOne({ userID: id });
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!userAcct) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  if (!source || password) {
+    res.status(400);
+    throw new Error("Please fill form correctly");
+  }
+
+  if (!checkPassword) {
+    res.status(400);
+    throw new Error("Password does not match original password");
+  }
+
+  const plan = await FlexPlan.findOneAndUpdate(
+    { userID: id },
+    { $set: { source: source } },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    msg: `Great choice `,
+    plan,
+  });
+});
+
 module.exports = {
   createFP,
   autoFlexPlanEarn,
@@ -986,4 +1030,5 @@ module.exports = {
   flexToDilla,
   flexToSAN,
   subcription,
+  setDIB,
 };

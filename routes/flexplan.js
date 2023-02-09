@@ -17,6 +17,7 @@ const {
   flexToDilla,
   flexToSAN,
   subcription,
+  setDIB,
 } = require("../controllers/flexPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -46,6 +47,8 @@ router.put("/flex-top-up", protect, topUp);
 router.put("/flex-to-dilla", protect, flexToDilla);
 
 router.put("/flex-to-san", protect, flexToSAN);
+
+router.put("/setting", protect, setDIB);
 
 router.get("/flex-history", protect, getFlexTransactionHistory);
 
