@@ -67,6 +67,6 @@ router.get("/target-history", protect, getTargetTransactionHistory);
 
 router.get("/target-total", protect, calculateTotalTargetBalance);
 
-router.get("/join/:id", joinTarget);
+router.get("/join/:id/targetId", joinTarget);
 
 module.exports = router;

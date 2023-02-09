@@ -1034,6 +1034,8 @@ const setDescription = asyncHandler(async (req, res) => {
 
 const joinTarget = asyncHandler(async (req, res) => {
   const referralId = req.params.id;
+  const targetId = req.params.targetId;
+  console.log(targetId);
   res.send(
     `I'm still being built by the best developer inthe world ... love rex . ${referralId} :) `
   );
