@@ -378,7 +378,36 @@ const getTargetPlans = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   //this will be modified to find base on the target id
-  const targetPlan = await TargetPlan.find({ userID: id });
+  const targetPlan = await TargetPlan.find({
+    userID: id,
+    activate: true,
+    dreamType: "private",
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User does not exist.");
+  }
+
+  if (!targetPlan) {
+    res.status(400);
+    throw new Error("You can't perform this action");
+  }
+
+  res.status(200).json({ success: true, targetPlan });
+});
+
+const getTargetPublicPlans = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(req.user.id);
+
+  //this will be modified to find base on the target id
+  const targetPlan = await TargetPlan.find({
+    userID: id,
+    activate: true,
+    dreamType: "public",
+  });
 
   if (!user) {
     res.status(400);
@@ -1063,4 +1092,5 @@ module.exports = {
   setDisplayType,
   setDescription,
   joinTarget,
+  getTargetPublicPlans,
 };

@@ -23,6 +23,7 @@ const {
   setDescription,
   setDisplayType,
   joinTarget,
+  getTargetPublicPlans,
 } = require("../controllers/targetPlan");
 
 const protect = require("../middlewares/authMiddleware");
@@ -44,6 +45,8 @@ router.put("/custom-duration/:id", protect, customTargetPlanDuration);
 router.get("/get-target-account/:id", protect, getTargetPlanAccount);
 
 router.get("/get-target-plans", protect, getTargetPlans);
+
+router.get("/get-target-public", protect, getTargetPublicPlans);
 
 router.put("/saving-period/:id", protect, setSavingPeriod);
 
