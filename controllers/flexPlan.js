@@ -337,6 +337,10 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
 
   const { period } = req.body;
 
+  let totalSaving;
+  let value;
+  let duration;
+
   const user = await User.findById(req.user.id);
 
   const userAcct = await FlexPlan.findOne({ userID: id });
@@ -356,16 +360,48 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
     throw new Error("Please input the period you want to save.");
   }
 
+  if (period === "daily") {
+    //
+    if (flexAcct.type === "custom") {
+      duration = ~~userAcct?.customDuration;
+      value = userAcct?.customSavingRate;
+    } else {
+      duration = ~~userAcct?.autoDuration;
+      value = userAcct?.autoSavingRate;
+    }
+
+    totalSaving = value * 31 * duration;
+    //
+  } else if (period === "weekly") {
+    //
+    if (flexAcct.type === "custom") {
+      duration = ~~userAcct?.customDuration;
+      value = userAcct?.customSavingRate;
+    } else {
+      duration = ~~userAcct?.autoDuration;
+      value = userAcct?.autoSavingRate;
+    }
+
+    totalSaving = value * 4 * duration;
+    //
+  } else {
+    if (flexAcct.type === "custom") {
+      totalSaving = userAcct?.customDuration;
+    } else {
+      totalSaving = userAcct?.autoSavingRate;
+    }
+  }
+
   const plan = await FlexPlan.findOneAndUpdate(
     { userID: id },
-    { $set: { savingPeriod: period } },
+    { $set: { savingPeriod: period, totalSaving: totalSaving } },
     { new: true }
   );
 
   res.status(200).json({
     success: true,
     msg: `Great choice cadet `,
-    plan,
+    totalSaving,
   });
 });
 

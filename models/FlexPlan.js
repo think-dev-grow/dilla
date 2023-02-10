@@ -21,6 +21,7 @@ const FlexSchema = new mongoose.Schema(
     badge: { type: String, default: "cadet" },
     savingPeriod: { type: String, default: "" },
     totalIntrest: { type: Number, default: 0 },
+    totalSaving: { type: Number, default: 0 },
     intrestPerMonth: { type: Array },
     breakdown: { type: Array },
     paymentDate: { type: String },
