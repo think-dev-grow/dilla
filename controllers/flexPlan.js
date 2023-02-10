@@ -362,7 +362,7 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
 
   if (period === "daily") {
     //
-    if (flexAcct.type === "custom") {
+    if (userAcct.type === "custom") {
       duration = ~~userAcct?.customDuration;
       value = userAcct?.customSavingRate;
     } else {
@@ -374,7 +374,7 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
     //
   } else if (period === "weekly") {
     //
-    if (flexAcct.type === "custom") {
+    if (userAcct.type === "custom") {
       duration = ~~userAcct?.customDuration;
       value = userAcct?.customSavingRate;
     } else {
@@ -385,7 +385,7 @@ const setSavingPeriod = asyncHandler(async (req, res) => {
     totalSaving = value * 4 * duration;
     //
   } else {
-    if (flexAcct.type === "custom") {
+    if (userAcct.type === "custom") {
       totalSaving = userAcct?.customDuration;
     } else {
       totalSaving = userAcct?.autoSavingRate;
